@@ -1,0 +1,29 @@
+.form-group{
+    margin-bottom: 15px;
+    position: relative;
+    padding: 36px 10px 12px 15px;
+    border-radius: 5px;
+}
+
+.loader-container {
+    border-radius: 10px;
+    width: 295px;
+    height: 295px;
+    position: auto;
+    background: #a5a5a5
+        url("../../assets/loading.gif") center
+        no-repeat;
+    z-index: 1;
+}
+
+/* Works for Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Works for Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
