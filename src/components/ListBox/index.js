@@ -3,7 +3,7 @@ import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import Icon from "react-crypto-icons";
 
-import { Bnb, Usdt, Usdc, Btcp } from '@styled-icons/crypto'
+import { Bnb, Usdt, Usdc, Btcp } from '@styled-icons/crypto';
 import { getBnbMintPrice, getCurrencyPrice } from "../../utils/nftController";
 
 const currencies = [

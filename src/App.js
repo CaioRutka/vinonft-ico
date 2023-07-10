@@ -1,14 +1,14 @@
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
-import MintPage from './pages/MintPage/MintPage';
-import MintPixPage from './pages/MintPixPage/MintPixPage';
+import Home from './pages/Home';
+import About from './pages/About';
 
 function App() {
   return (    
     <Router>
       <Routes>
-        <Route path = "/" element = { <MintPage />}/>
-        <Route path = "/pix" element = { <MintPixPage />}/>
+        <Route path = "/" element = { <Home />}/>
+        <Route path = "/about" element = { <About />}/>
       </Routes>
     </Router>
   );

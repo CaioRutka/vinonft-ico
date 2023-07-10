@@ -19,15 +19,15 @@ export default function MyModal({connectWallet, buttonPadding, fontSize}) {
       <div>
         <Button
             backgroundColor = "#A6013B"
-            borderRadius = "30px"
+            borderRadius = "10px"
             color = "white"
-            fontFamily = "CloserText"
+            fontFamily = "Montserrat"
             fontSize={fontSize}
             padding = {buttonPadding}
             margin = "0 15px"
             onClick = {openModal}
         >
-            Connect
+            Wallet Connect
         </Button>
       </div>
 

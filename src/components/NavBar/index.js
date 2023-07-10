@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content';
 
-import logoElVinos from "../../assets/logo-elvinos.png";
+import logoElVinos from "../../assets/images/logo-elvinos-branco.png";
 import '../../assets/fonts/CloserText-Light.otf';
 import MyModal from "../Modal";
 
@@ -74,14 +74,14 @@ const NavBar = ({ accounts, setAccounts}) => {
   useEffect(() => {
     if(windowWidth <= 500) {
       setFontSize(10);
-      setLogoW(120);
-      setLogoH(44.28);
-      setButtonPadding("10px 20px 10px 20px");
+      setLogoW(102);
+      setLogoH(37.638);
+      setButtonPadding("5px 10px 5px 10px");
     } else {
-      setFontSize(18);
-      setLogoW(200);
-      setLogoH(73.8);
-      setButtonPadding("20px 40px 20px 40px");
+      setFontSize(17);
+      setLogoW(170);
+      setLogoH(62.73);
+      setButtonPadding("10px 20px 10px 20px");
     }
   }, [windowWidth])
 
@@ -236,7 +236,7 @@ const NavBar = ({ accounts, setAccounts}) => {
           }   
 
     return (
-        <Flex justify = "space-between" align="center" padding="28px" backgroundColor={"#F7F1F0"}>
+        <Flex justify = "space-between" align="center" padding="28px" bg="rgba(0,0,0,0.5)" borderBottomWidth={1} height={87} >
 
             <Link to = "/">
                 <Image src = {logoElVinos} width={logoW} height={logoH} objectFit='fit'/>
@@ -244,23 +244,58 @@ const NavBar = ({ accounts, setAccounts}) => {
 
             <Flex justify = "space-between" align="center">
               <Link to = "/">
-                <Box margin = "0 15px" color={"black"} fontFamily = "Config" fontSize={fontSize}> Mint </Box>
+                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize}  padding={3}> Home </Box>
               </Link> 
       
-              <Link to = "/pix">
-                <Box margin = "0 15px" color={"black"} fontFamily = "Config" fontSize={fontSize}> Compre no Pix </Box>
+              <Link to = "/">
+                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Sobre Nos </Box>
+              </Link> 
+
+              <Link to = "/">
+                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Wallet </Box>
+              </Link> 
+
+              <Link to = "/">
+                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> E-commerce </Box>
+              </Link> 
+
+              <Link to = "/">
+                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> VinoFlix </Box>
+              </Link> 
+
+              <Link to = "/">
+                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> NFTs </Box>
+              </Link> 
+
+              <Link to = "/">
+                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Roadmap </Box>
               </Link> 
             </Flex>
-
-              {
-                isConnected
-                ?
+            {
+              isConnected
+              ?
+              <Box justify = "center" align="center" display={"flex"} flexDirection={"row"}>
                 <Button
                     backgroundColor = "#A6013B"
-                    borderRadius = "30px"
+                    borderRadius = "10px"
                     borderWidth={ 0 }
                     color = "white"
-                    fontFamily = "CloserText"
+                    fontFamily = "Montserrat"
+                    fontSize={fontSize}
+                    padding = {buttonPadding}
+                    margin = "0 15px"
+                    onClick = {() => {}}
+                    maxWidth={windowWidth/3}
+                >
+                    Login
+                </Button>
+
+                <Button
+                    backgroundColor = "#A6013B"
+                    borderRadius = "10px"
+                    borderWidth={ 0 }
+                    color = "white"
+                    fontFamily = "Montserrat"
                     fontSize={fontSize}
                     padding = {buttonPadding}
                     margin = "0 15px"
@@ -269,9 +304,25 @@ const NavBar = ({ accounts, setAccounts}) => {
                 >
                     Connected
                 </Button>
-                :
-                <MyModal connectWallet = {connectWallet} buttonPadding = {buttonPadding} fontSize = {fontSize}/>
-                
+              </Box>
+              :
+              <Box justify = "center" align="center" display={"flex"} flexDirection={"row"}>
+                <Button
+                    backgroundColor = "#A6013B"
+                    borderRadius = "10px"
+                    borderWidth={ 0 }
+                    color = "white"
+                    fontFamily = "Montserrat"
+                    fontSize={fontSize}
+                    padding = {buttonPadding}
+                    margin = "0 15px"
+                    onClick = {() => {}}
+                    maxWidth={windowWidth/3}
+                >
+                    Login
+                </Button>
+              <MyModal connectWallet = {connectWallet} buttonPadding = {buttonPadding} fontSize = {fontSize}/>   
+              </Box>             
             }
         </Flex>
     );
