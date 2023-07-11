@@ -5,9 +5,9 @@ import { ShoppingCartIcon, NewspaperIcon } from '@heroicons/react/24/solid'
 
 import '../../assets/fonts/Config-Regular.otf';
 import './index.css';
-import Wine from "../../assets/images/Retângulo 16.png";
+import Wine from "../../assets/images/Retangulo2.png";
 
-const About = () => {
+const About = ({ handleClickScroll }) => {
   const [isMobile, setIsBMobile] = useState(true);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const About = () => {
             isMobile
             ?
             <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} w = {'100%'} h = {'100%'}>
-              <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'100%'} h = {"100%"} backgroundColor={"#1F000A"} padding={75}>
+              <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'100%'} h = {"100%"} backgroundColor={"#1F000A"} padding={50}>
                 <Box color={"white"} fontFamily = "Playfair Display" fontSize={42}>
                   Sobre Nós
                 </Box>
@@ -70,7 +70,7 @@ const About = () => {
                        fontSize={20}
                        padding = "10px"
                        width={250}
-                       onClick = {() => { }}
+                       onClick = {() => { handleClickScroll(); }}
                        zIndex={1}
                     >
                       Comprar Vinocoin
@@ -149,7 +149,7 @@ const About = () => {
                        fontSize={20}
                        padding = "10px"
                        width={250}
-                       onClick = {() => { }}
+                       onClick = {() => { handleClickScroll(); }}
                        zIndex={1}
                     >
                       Comprar Vinocoin
@@ -167,7 +167,7 @@ const About = () => {
                        fontSize={20}
                        padding = "10px"
                        width={250}
-                       onClick = {() => { }}
+                       onClick = {() => { window.open("https://elvinos.gitbook.io/whitepapper-vinocoin/", "_blank") }}
                        zIndex={1}
                     >
                       Ler Whitepaper

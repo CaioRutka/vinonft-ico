@@ -9,7 +9,7 @@ import tokens from "../../assets/images/e219c56b83b60ccfdc25ffeda216524a@2x.png"
 import '../../assets/fonts/Config-Regular.otf';
 import './index.css';
 
-const ICOBox = () => {
+const ICOBox = ({handleClickScroll}) => {
   const [isMobile, setIsMobile] = useState(true);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const ICOBox = () => {
                        fontSize={20}
                        padding = "10px"
                        width={250}
-                       onClick = {() => { }}
+                       onClick = {() => { handleClickScroll(); }}
                        zIndex={1}
                     >
                       Comprar Vinocoin
@@ -108,7 +108,7 @@ const ICOBox = () => {
                        fontSize={20}
                        padding = "10px"
                        width={250}
-                       onClick = {() => { }}
+                       onClick = {() => { handleClickScroll(); }}
                        zIndex={1}
                     >
                       Comprar Vinocoin

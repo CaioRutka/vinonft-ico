@@ -1,54 +1,67 @@
 import { useState, React, useEffect } from "react";
 import { ethers } from "ethers";
-import { Box, Button, Flex, Image } from "@chakra-ui/react";
+import { Box, Button, Flex, Image, Center } from "@chakra-ui/react";
 import { isMobile } from 'react-device-detect';
+import axios from "axios";
 
 import '../../assets/fonts/Config-Regular.otf';
 import './index.css';
 
 import { ShoppingCartIcon } from '@heroicons/react/24/solid'
 import Wines from "../../assets/images/vinhos-moeda@2x.png";
+import VinocoinIcon from "../../assets/images/Moeda.png";
+import BNBIcon from "../../assets/images/bnb.png";
 
-import { mintBNB, mintCurrency, approveUSDT, approveBUSD } from "../../utils/nftController";
+import { invest } from "../../utils/nftController";
 
-const currencies = [
-  { name: 'BNB', icon: "bnb", _id: 100},
-  { name: 'USDT', icon: "usdt", _id: 0},
-  { name: 'BUSD', icon: "usd", _id: 1},
-]
-
-const Swap = ({ accounts, setAccounts }) => {
+const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
     const isConnected = Boolean(accounts[0]);
-    const [mintAmount, setMintAmount] = useState(1);
+
+    const [tokenAmount, setTokenAmount] = useState(0);
+    const [BNBAmount, setBNBAmount] = useState(0);
+    const [BNBPrice, setBNBPrice] = useState(0);
+    
     const [loading, setLoading] = useState(false);
 
     const [slides, setSlides] = useState([]);
 
-    const [selected, setSelected] = useState(currencies[0]);
-
     const [walletAddress, setWalletAddress] = useState("");
     const [signer, setSigner] = useState(undefined);
     const [mobile, setMobile] = useState(true);
+
+    const handleTokenAmount = e => {
+      const { value } = e.target;
+      setTokenAmount(value);
+    }
 
     useEffect(() => {
       if (window !== undefined){
         if(window.innerWidth >= 575){
           setMobile(false);
         }
+
+        axios.get(`https://api.coinpaprika.com/v1/price-converter?base_currency_id=bnb-binance-coin&quote_currency_id=usdt-tether&amount=1`)
+            .then((response) => {
+                if ( response.status === 200 ){
+                  setBNBPrice(response.data.price);
+                }
+            });
       } 
     }, [])
   
-      useEffect(() => {
-          getCurrentWalletConnected();
-          addWalletListener();
-      }, [walletAddress]);
+    useEffect(() => {
+      getCurrentWalletConnected();
+      addWalletListener();
+    }, [walletAddress]);
   
-       useEffect(() => {
-          setLoading(false);
-       }, [slides])
-       
-       useEffect(() => {
-       }, [selected]);
+    useEffect(() => {
+      setLoading(false);
+    }, [slides])
+
+    useEffect(() => {
+      console.log(tokenAmount);
+      setBNBAmount(0.25 * tokenAmount / BNBPrice);
+    }, [tokenAmount])     
 
     const getCurrentWalletConnected = async () => {
         if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
@@ -86,53 +99,22 @@ const Swap = ({ accounts, setAccounts }) => {
         }
       };
 
-    async function getApproval(_id) {
-        if (window.ethereum || isMobile) {
-            if(_id === 0){
-                approveUSDT(_id, walletAddress, signer, handleMintCurrency);
-            } else if (_id === 1) {
-                approveBUSD(_id, walletAddress, signer, handleMintCurrency);
-            }
-            
-        }
-    }
-
-    async function handleMintBNB() {
+    async function Invest() {
         if (window.ethereum || isMobile) {
             setLoading(true);
-            await mintBNB(mintAmount, signer).then((slidesArray) => { 
-                if (slidesArray === null) {
-                    setLoading(false);
-                } else{
-                    setSlides(slidesArray);
-                }
-            });
-        } else {
-        }
-    }
-
-    async function handleMintCurrency(_id) {
-        if (window.ethereum || isMobile) {
-            setLoading(true);
-            await mintCurrency(signer, mintAmount, _id).then((slidesArray) => { 
-                if (slidesArray === null) {
-                    setLoading(false);
-                } else{
-                    setSlides(slidesArray);
-                }
-            });
+            await invest(tokenAmount, signer);
         } else {
         }
     }
 
     const handleDecrement = () => {
-        if (mintAmount <= 1) return;
-        setMintAmount(mintAmount - 1);
+        if (tokenAmount <= 1) return;
+        setTokenAmount(tokenAmount - 1);
     }
 
     const handleIncrement = () => {
-        if (mintAmount >= 10) return;
-        setMintAmount(mintAmount + 1);
+        if (tokenAmount >= 10) return;
+        setTokenAmount(tokenAmount + 1);
     }
 
     return (
@@ -142,7 +124,7 @@ const Swap = ({ accounts, setAccounts }) => {
             ?
             <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'85%'} h={1050}>
               <Box justify = "center" align="center">
-                <Box color={"white"} fontFamily = "Playfair Display" fontSize={40} w={"100%"} marginBottom={50} marginTop={50} align={"center"}> 
+                <Box color={"white"} fontFamily = "Playfair Display" fontSize={40} w={"100%"} align={"center"} marginTop={20}> 
                   O universo do vinho agora inserido na criptoeconomia 
                 </Box>     
                 <Button
@@ -153,15 +135,90 @@ const Swap = ({ accounts, setAccounts }) => {
                      fontSize={20}
                      padding = "10px"
                      width={250}
-                     onClick = {() => { }}
+                     marginTop={20}
+                     onClick = {() => {
+                      handleClickScroll();
+                     }}
                      zIndex={1}
                 >
                   Compre Vinocoin
                   <ShoppingCartIcon className="ml-4 h-6 w-6 text-white-500" />
                 </Button>
 
-                <Box justify = "center" align="center" h = {400} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"} marginTop={40} marginLeft={10} marginRight={10}>
-                <Box w={400} h = {100} justify = "center" align="center">
+                <Center justify = "center" align="center" w = {300} h = {410} marginTop={40} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"}>
+
+                  <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={25} w={"100%"} align={"center"}> 
+                    Vinocoin ICO
+                  </Box> 
+
+                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={25}> 
+                    1 Vinocoin = 0.25 USDT
+                  </Box> 
+                  
+                  <Box display={"flex"} flexDirection={"row"} align={"start"} w = {250}> 
+                    <Image src = {VinocoinIcon} boxSize='30px' objectFit='fit' marginRight={10}/>
+                    <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={20}  w = {"100%"}> 
+                      Vinocoin
+                    </Box> 
+                  </Box> 
+
+                  <div style = {{paddingBottom: 15}}>
+                      <input 
+                          type="number"
+                          name="amount"
+                          placeholder="Amount" 
+                          className="form-control" 
+                          value={tokenAmount}
+                          pattern="[0-9]*"
+                          onChange={handleTokenAmount}
+                          style = {{
+                              height: "45px",
+                              width: "250px",
+                              fontFamily: "Montserrat",
+                              borderRadius: "5px",
+                              margin: 10,
+                              textAlign: "center",
+                              fontSize: 15,
+                              color: "#A6013B",
+                              borderColor: "#A6013B",
+                              borderWidth: "2px",
+                              zIndex:'1'
+                          }}
+                      />
+                  </div>
+
+                  <Center display={"flex"} flexDirection={"row"} align={"start"} w = {250}> 
+                    <Image src = {BNBIcon} boxSize='20px' objectFit='fit' marginRight={20}/>
+                    <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={20}  w = {"100%"}> 
+                      BNB
+                    </Box> 
+                  </Center> 
+
+                  <div style = {{paddingBottom: 20}}>
+                      <input 
+                          type="number"
+                          name="amount"
+                          placeholder="Amount" 
+                          className="form-control" 
+                          value={BNBAmount}
+                          readOnly
+                          pattern="[0-9]*"
+                          style = {{
+                              height: "45px",
+                              width: "250px",
+                              fontFamily: "Montserrat",
+                              borderRadius: "5px",
+                              margin: 10,
+                              textAlign: "center",
+                              fontSize: 15,
+                              color: "#A6013B",
+                              borderColor: "#A6013B",
+                              borderWidth: "2px",
+                              zIndex:'1'
+                          }}
+                      />
+                  </div>
+
                   <Button
                        backgroundColor = "#A6013B"
                        borderRadius = "8px"
@@ -170,13 +227,14 @@ const Swap = ({ accounts, setAccounts }) => {
                        fontSize={20}
                        padding = "10px"
                        width={250}
-                       onClick = {() => { }}
+                       onClick = {() => { 
+                        Invest();
+                        }}
                        zIndex={1}
                   >
                     Realizar Swap
                   </Button>
-                </Box>
-              </Box>
+              </Center>
               </Box>
             </Box>
             :
@@ -205,23 +263,96 @@ const Swap = ({ accounts, setAccounts }) => {
                 <Image src = {Wines} boxSize='560px' objectFit='fit' top={400} />
               </Box>
 
-              <Box justify = "center" align="start" h = {400} marginTop={40} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"} marginLeft={50}>
-                <Box w={400} h = {100} justify = "center" align="center">
-                <Button
-                     backgroundColor = "#A6013B"
-                     borderRadius = "8px"
-                     color = "white"
-                     fontFamily = "Montserrat"
-                     fontSize={20}
-                     padding = "10px"
-                     width={250}
-                     onClick = {() => { }}
-                     zIndex={1}
-                >
-                  Realizar Swap
-                </Button>
-                </Box>
-              </Box>
+              <Center justify = "center" align="center" w = {400} h = {410} marginTop={40} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"} marginLeft={50}>
+
+                  <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={25} w={"100%"} align={"center"}> 
+                    Vinocoin ICO
+                  </Box> 
+
+                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={25}> 
+                    1 Vinocoin = 0.25 USDT
+                  </Box> 
+                  
+                  <Box display={"flex"} flexDirection={"row"} align={"start"} w = {250}> 
+                    <Image src = {VinocoinIcon} boxSize='30px' objectFit='fit' marginRight={10}/>
+                    <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={20}  w = {"100%"}> 
+                      Vinocoin
+                    </Box> 
+                  </Box> 
+
+                  <div style = {{paddingBottom: 15}}>
+                      <input 
+                          type="number"
+                          name="amount"
+                          placeholder="Amount" 
+                          className="form-control" 
+                          value={tokenAmount}
+                          pattern="[0-9]*"
+                          onChange={handleTokenAmount}
+                          style = {{
+                              height: "45px",
+                              width: "250px",
+                              fontFamily: "Montserrat",
+                              borderRadius: "5px",
+                              margin: 10,
+                              textAlign: "center",
+                              fontSize: 15,
+                              color: "#A6013B",
+                              borderColor: "#A6013B",
+                              borderWidth: "2px",
+                              zIndex:'1'
+                          }}
+                      />
+                  </div>
+
+                  <Center display={"flex"} flexDirection={"row"} align={"start"} w = {250}> 
+                    <Image src = {BNBIcon} boxSize='20px' objectFit='fit' marginRight={20}/>
+                    <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={20}  w = {"100%"}> 
+                      BNB
+                    </Box> 
+                  </Center> 
+
+                  <div style = {{paddingBottom: 20}}>
+                      <input 
+                          type="number"
+                          name="amount"
+                          placeholder="Amount" 
+                          className="form-control" 
+                          value={BNBAmount}
+                          readOnly
+                          pattern="[0-9]*"
+                          style = {{
+                              height: "45px",
+                              width: "250px",
+                              fontFamily: "Montserrat",
+                              borderRadius: "5px",
+                              margin: 10,
+                              textAlign: "center",
+                              fontSize: 15,
+                              color: "#A6013B",
+                              borderColor: "#A6013B",
+                              borderWidth: "2px",
+                              zIndex:'1'
+                          }}
+                      />
+                  </div>
+
+                  <Button
+                       backgroundColor = "#A6013B"
+                       borderRadius = "8px"
+                       color = "white"
+                       fontFamily = "Montserrat"
+                       fontSize={20}
+                       padding = "10px"
+                       width={250}
+                       onClick = {() => { 
+                        Invest();
+                        }}
+                       zIndex={1}
+                  >
+                    Realizar Swap
+                  </Button>
+              </Center>
             </Box>
             }
         </Flex>

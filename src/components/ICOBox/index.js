@@ -22,12 +22,12 @@ const ICOBox = () => {
       {
         isMobile
         ?
-        <Flex zIndex={0} justify = "center" align="center" w = {'100%'} h={900} bg="#1F000A">
-          <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'85%'} h={600}>
-            <Box justify = "center" align="start" display={"flex"} flexDirection={"column"} paddingLeft={"2%"} w = {"100%"} h = {"90%"}>
+        <Flex zIndex={0} justify = "center" align="center" w = {'100%'} h={1100} bg="#1F000A">
+          <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'85%'} h={900}>
+            <Box justify = "center" align="start" display={"flex"} flexDirection={"column"} paddingLeft={"2%"} w = {"100%"} h = {"60%"}>
               <Box justify = "center" align="start" display={"flex"} flexDirection={"row"}  h = {"50%"}>
                 <Image src = {Wine}  objectFit='fit' />
-                <Center paddingLeft={"10%"} paddingRight={"10%"} color={"white"} backgroundColor={"#A6013B"} fontFamily = "Montserrat" fontSize={10} align={"center"}> 
+                <Center paddingLeft={"5%"} paddingRight={"5%"} color={"white"} backgroundColor={"#A6013B"} fontFamily = "Montserrat" fontSize={9} align={"center"}> 
                   Nesta primeira etapa, A Elvinos será financiado através do token vinocoin onde buscando arrecadar U$ 85.000 dólares que será utilizado para acelerar e construir todo seu ecossistema, gerando cada vez mais utilidade ao token e lucro através das suas varias vertentes de atividades tais como: venda de vinhos através do eccomerce, importação, venda de cursos, clube de beneficios,NFT's eventos e muito mais...  
                 </Center>    
               </Box>

@@ -18,15 +18,26 @@ import './index.css';
 function Home() {
   const [accounts, setAccounts] = useState([]);
 
+  const handleClickScroll = () => {
+    const element = document.getElementById('swap-section');
+    if (element) {
+      // 👇 Will scroll smoothly to the top of the next section
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (    
     <div className="overlay">
       <div className="overlay">
         <NavBar accounts = { accounts } setAccounts = {setAccounts}/>
-        <Swap accounts = { accounts } setAccounts = {setAccounts}/>
-        <About />
+        <div id="swap-section">
+          <Swap accounts = { accounts } setAccounts = {setAccounts} handleClickScroll = {handleClickScroll}/>
+        </div>
+        
+        <About handleClickScroll = {handleClickScroll}/>
         <Vinocoin />
         <ICOBox />
-        <ICOAbout/>
+        <ICOAbout handleClickScroll = {handleClickScroll}/>
         <Ecosystem />
         <Tokenomics />
         <Roadmap/>

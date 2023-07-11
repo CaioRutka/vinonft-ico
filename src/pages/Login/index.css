@@ -1,0 +1,61 @@
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+@import url("https://fonts.googleapis.com/css?family=VT323");
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+
+@font-face {
+  font-family: "CloserText";
+  src: local("CloserText"),
+   url("/src/assets/fonts/CloserText-Light.otf") format("truetype");
+  font-weight: light;
+}
+
+@font-face {
+  font-family: "Config";
+  src: local("Config"),
+   url("/src/assets/fonts/Config-Regular.otf") format("truetype");
+  font-weight: regular;
+}
+
+.App {
+  text-align: center;
+  font-family: "Press Start 2P", "VT323", "Playfair Display", "Montserrat";
+  color: black;
+  flex: 1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  position: fixed;
+  overflow-y: auto;
+}
+
+.login-background {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../../assets/images/imgem-fundo-vinicola.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 40% 40%;  
+}
+
+.opac-background {
+  height: 100%;
+  width: 100%;
+  opacity: 0.6; 
+}

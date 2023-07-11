@@ -1,10 +1,11 @@
 import { useState, React, useEffect } from "react";
-import { Button, Flex, Image, Box } from "@chakra-ui/react";
+import { Button, Flex, Image, Box, useColorMode, Center, IconButton } from "@chakra-ui/react";
 import { ethers } from "ethers";
-import { isMobile } from 'react-device-detect';
+import { isMobile, mobileModel } from 'react-device-detect';
 import { Link } from "react-router-dom";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content';
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 
 import logoElVinos from "../../assets/images/logo-elvinos-branco.png";
 import '../../assets/fonts/CloserText-Light.otf';
@@ -39,6 +40,19 @@ const networks = {
         "https://bsc-dataseed.binance.org/"
       ],
       blockExplorerUrls: ["https://bscscan.com"]
+    },
+    bnbTeste: {
+      chainId: `0x${Number(97).toString(16)}`,
+      chainName: "BNB Smartchain Testnet",
+      nativeCurrency: {
+        name: "BNB Token",
+        symbol: "tBNB",
+        decimals: 18
+      },
+      rpcUrls: [
+        "https://data-seed-prebsc-1-s1.binance.org:8545/"
+      ],
+      blockExplorerUrls: ["https://testnet.bscscan.com"]
     }
 };
 
@@ -65,60 +79,61 @@ const NavBar = ({ accounts, setAccounts}) => {
   const [logoH, setLogoH] = useState(0);
   const [buttonPadding, setButtonPadding] = useState("");
 
-  useEffect(() => {
-    if (window !== undefined){
-      setWindowWidth(window.innerWidth);
-    } 
-  }, [])
+  const [mobile, setMobile] = useState(true);
+  const [menuState, setMenuState] = useState(false);
 
-  useEffect(() => {
-    if(windowWidth <= 500) {
-      setFontSize(10);
-      setLogoW(102);
-      setLogoH(37.638);
-      setButtonPadding("5px 10px 5px 10px");
-    } else {
-      setFontSize(17);
-      setLogoW(170);
-      setLogoH(62.73);
-      setButtonPadding("10px 20px 10px 20px");
-    }
-  }, [windowWidth])
-
-  useEffect(() => {
-      getCurrentWalletConnected();
-      addWalletListener();
-      checkNetwork();
-      
-      if ( walletAddress != "undefined" && walletAddress != ""){
-        var wsProvider = new ethers.WebSocketProvider("wss://greatest-white-lake.bsc.discover.quiknode.pro/371be6d22daa0bc1e2d04c2dd9bfa6916fc9b843/");
-        const contractEl = new ethers.Contract(elVinoNFTAddress, abiVinoNFT, wsProvider);
-
-        contractEl.on("Transfer", async (from, to, amount, event) => {
-          if ( to.toLowerCase() == walletAddress) {
-            var getTokenURL = await contractEl.tokenURI(amount);
-            var imageURL = await getImageFromNft(getTokenURL);
-            
-            alertContent("NFT recebida com sucesso !", imageURL.image, imageURL.name);
+    useEffect(() => {
+        if (window !== undefined){
+          if(window.innerWidth >= 575){
+            setMobile(false);
           }
-        })
-
-        return() => {
-          contractEl.removeAllListeners();
         }
+    }, [])
+
+    useEffect(() => {
+      if (window !== undefined){
+        setWindowWidth(window.innerWidth);
+      } 
+    }, [])
+
+    useEffect(() => {
+      if(windowWidth <= 500) {
+        setFontSize(12);
+        setLogoW(102);
+        setLogoH(37.638);
+        setButtonPadding("5px 10px 5px 10px");
+      } else {
+        setFontSize(17);
+        setLogoW(170);
+        setLogoH(62.73);
+        setButtonPadding("10px 20px 10px 20px");
       }
+    }, [windowWidth])
+
+    useEffect(() => {
+        getCurrentWalletConnected();
+        addWalletListener();
+        checkNetwork();
     }, [walletAddress]);
+
+    const changeMenuState = () => {
+      if (menuState == true) {
+        setMenuState(false);
+      } else if (menuState == false) {
+        setMenuState(true);
+      }
+    };
 
     const connectMetamaskMobile = (walletID) => {
       if (walletID === 0){
         const META_URL = "https://metamask.app.link/dapp/";
         const dappUrl = window.location.href.split("//")[1].split("/")[0];
-        const metamaskAppDeepLink = META_URL + dappUrl + "/nft2";
+        const metamaskAppDeepLink = META_URL + dappUrl + "/vinocoin-ico";
         window.open(metamaskAppDeepLink, "_self");
       } else if (walletID === 1){
         const TRUST_URL = "https://link.trustwallet.com/open_url?coin_id=20000714&url=https://";
         const dappUrl = window.location.href.split("//")[1].split("/")[0];
-        const trustWalletdeepLink = `${TRUST_URL}${encodeURIComponent(dappUrl  + "/nft2")}`;  
+        const trustWalletdeepLink = `${TRUST_URL}${encodeURIComponent(dappUrl  + "/vinocoin-ico")}`;  
         window.open(trustWalletdeepLink, "_self"); 
       }
     };
@@ -236,7 +251,130 @@ const NavBar = ({ accounts, setAccounts}) => {
           }   
 
     return (
-        <Flex justify = "space-between" align="center" padding="28px" bg="rgba(0,0,0,0.5)" borderBottomWidth={1} height={87} >
+      <div>
+        {
+          mobile
+          ?
+          <div>
+          {
+            menuState
+            ?
+            <Flex justify = "space-between" align="start" display={"flex"} flexDirection={"column"} padding="28px" bg="rgba(0,0,0,0.5)" borderBottomWidth={1} height={300} >
+              <Flex justify = "space-between" align="center" display={"flex"} flexDirection={"row"} w = {"100%"} >
+                <Link to = "/">
+                  <Image src = {logoElVinos} width={logoW} height={logoH} objectFit='fit'/>
+              </Link>
+
+              <IconButton
+                colorScheme='white'
+                aria-label='Open Menu'
+                onClick={() => changeMenuState()}
+                icon = {<HamburgerIcon color = {"white"} boxSize={25}/>}
+              />
+              </Flex>
+            
+            <Flex justify = "space-between" align="start" display={"flex"} flexDirection={"row"} w = {"100%"}>
+            <Flex justify = "start" align="start" display={"flex"} flexDirection={"column"}>
+              <Link to = "/">
+                <Box color={"white"} fontFamily = "Montserrat" fontSize={fontSize}  padding={3}> Home </Box>
+              </Link> 
+      
+              <Link to = "/">
+                <Box color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Sobre Nos </Box>
+              </Link> 
+
+              <Link to = "/">
+                <Box color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Wallet </Box>
+              </Link> 
+
+              <Link to = "/">
+                <Box  color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> E-commerce </Box>
+              </Link> 
+
+              <Link to = "/">
+                <Box  color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> VinoFlix </Box>
+              </Link> 
+
+              <Link to = "/">
+                <Box  color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> NFTs </Box>
+              </Link> 
+
+              <Link to = "/">
+                <Box color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Roadmap </Box>
+              </Link> 
+            </Flex>
+
+            {
+              isConnected
+              ?
+              <Box justify = "center" align="center" display={"flex"} flexDirection={"column"}>
+                <Button
+                    backgroundColor = "#A6013B"
+                    borderRadius = "10px"
+                    borderWidth={ 0 }
+                    color = "white"
+                    fontFamily = "Montserrat"
+                    fontSize={fontSize}
+                    padding = {buttonPadding}
+                    onClick = {() => {}}
+                    maxWidth={windowWidth/3}
+                    marginBottom={20}
+                >
+                    Login
+                </Button>
+
+                <Button
+                    backgroundColor = "#A6013B"
+                    borderRadius = "10px"
+                    borderWidth={ 0 }
+                    color = "white"
+                    fontFamily = "Montserrat"
+                    fontSize={fontSize}
+                    padding = {buttonPadding}
+                    onClick = {() => {}}
+                    maxWidth={windowWidth/3}
+                >
+                    Connected
+                </Button>
+              </Box>
+              :
+              <Box justify = "center" align="center" display={"flex"} flexDirection={"column"}>
+                <Button
+                    backgroundColor = "#A6013B"
+                    borderRadius = "10px"
+                    borderWidth={ 0 }
+                    color = "white"
+                    fontFamily = "Montserrat"
+                    fontSize={fontSize}
+                    padding = {buttonPadding}
+                    onClick = {() => {}}
+                    maxWidth={windowWidth/3}
+                >
+                    Login
+                </Button>
+              <MyModal connectWallet = {connectWallet} buttonPadding = {buttonPadding} fontSize = {fontSize}/>   
+              </Box>             
+            }
+            </Flex>
+              
+            </Flex>
+            :
+            <Flex justify = "space-between" align="center" padding="28px" bg="rgba(0,0,0,0.5)" borderBottomWidth={1} height={87} >
+              <Link to = "/">
+                  <Image src = {logoElVinos} width={logoW} height={logoH} objectFit='fit'/>
+              </Link>
+
+              <IconButton
+                colorScheme='white'
+                aria-label='Open Menu'
+                onClick={() => changeMenuState()}
+                icon = {<HamburgerIcon color = {"white"} boxSize={25}/>}
+              />
+            </Flex>
+          }
+          </div>
+          :
+          <Flex justify = "space-between" align="center" padding="28px" bg="rgba(0,0,0,0.5)" borderBottomWidth={1} height={87} >
 
             <Link to = "/">
                 <Image src = {logoElVinos} width={logoW} height={logoH} objectFit='fit'/>
@@ -325,6 +463,8 @@ const NavBar = ({ accounts, setAccounts}) => {
               </Box>             
             }
         </Flex>
+        }
+      </div>        
     );
 }
 
