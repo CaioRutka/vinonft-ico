@@ -29,8 +29,8 @@ const ICOBox = ({handleClickScroll}) => {
             <Box w = {'70%'} h = {'70%'} display={"flex"} flexDirection={"column"}>
 
               <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'100%'} h = {"100%"}>
-                <Box color={"white"} fontFamily = "Playfair Display" fontSize={42} padding={50} paddingTop={100} paddingBottom={20}>
-                  Sobre Nós
+                <Box color={"white"} fontFamily = "Playfair Display" fontSize={42} padding={50} paddingTop={100} paddingBottom={20} justify = "center" align="center">
+                  Pré venda
                 </Box>
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingBottom={10}>
@@ -80,7 +80,7 @@ const ICOBox = ({handleClickScroll}) => {
 
               <Box zIndex={0} justify = "center" align="start" display={"flex"} flexDirection={"column"} w = {'50%'} h = {"100%"}>
                 <Box color={"white"} fontFamily = "Playfair Display" fontSize={42} padding={100} paddingBottom={20}>
-                  Sobre Nós
+                  Pré-venda
                 </Box>
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingLeft={100} paddingRight={50} paddingBottom={10}>

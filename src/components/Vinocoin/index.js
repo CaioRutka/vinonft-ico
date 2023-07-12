@@ -29,7 +29,7 @@ const Vinocoin = () => {
             </Box>
 
             <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingTop={50}>
-              Adquirir a Vinocoin significa obter a primeira criptomoeda do mundo voltada a todos os amantes de vinhos.
+              Adquirir a vinocoin significa obter a primeira criptomoeda do mundo voltada a todos os amantes de vinhos.
             </Box>
 
             <Box color={"white"} fontFamily = "Playfair Display" fontSize={18} paddingTop={25} paddingBottom={25}>
@@ -37,7 +37,7 @@ const Vinocoin = () => {
             </Box>
             
             <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingTop={25} paddingBottom={25}>
-              A Vinocoin foi desenvolvida para financiar parte da operação da elvinos e posteriormente devolver aos detentores dos tokens seguindo o processo:
+              Elvinos Obtém lucros com ecossistema e recompra tokens no mercado fazendo com que se valorize e se torne mais escasso
             </Box>
 
             <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} h = {'100%'}>
@@ -47,16 +47,16 @@ const Vinocoin = () => {
         </Box>
         :
         <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} w = {'100%'} h={"100%"}>
-          <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} w = {'60%'} h={"100%"}>
-            <Image src = {Wine} objectFit='fit'/>
-          </Box>  
+          <Center zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} w = {'50%'} h={"100%"} backgroundColor={"#000"}>
+            <Image src = {Wine} h={"70%"} objectFit='fit'/>
+          </Center>  
           <Box zIndex={0} justify = "center" align="start" display={"flex"} flexDirection={"column"} w = {'50%'} h = {"100%"} backgroundColor={"#000"} padding={75} paddingLeft={150}>
             <Box color={"white"} fontFamily = "Playfair Display" fontSize={42}>
               Vinocoin
             </Box>
 
             <Box color={"white"} fontFamily = "Montserrat" fontSize={18} paddingTop={50}>
-              Adquirir a Vinocoin significa obter a primeira criptomoeda do mundo voltada a todos os amantes de vinhos.
+              Adquirir a vinocoin significa obter a primeira criptomoeda do mundo voltada a todos os amantes de vinhos.
             </Box>
 
             <Box color={"white"} fontFamily = "Playfair Display" fontSize={20} paddingTop={25} paddingBottom={25}>
@@ -64,7 +64,7 @@ const Vinocoin = () => {
             </Box>
             
             <Box color={"white"} fontFamily = "Montserrat" fontSize={18} paddingTop={25} paddingBottom={25}>
-              A Vinocoin foi desenvolvida para financiar parte da operação da elvinos e posteriormente devolver aos detentores dos tokens seguindo o processo:
+              Elvinos Obtém lucros com ecossistema e recompra tokens no mercado fazendo com que se valorize e se torne mais escasso
             </Box>
 
             <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} w = {'100%'}>

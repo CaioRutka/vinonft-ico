@@ -35,12 +35,12 @@ function Home() {
         </div>
         
         <About handleClickScroll = {handleClickScroll}/>
+        <Ecosystem />
         <Vinocoin />
         <ICOBox />
         <ICOAbout handleClickScroll = {handleClickScroll}/>
-        <Ecosystem />
-        <Tokenomics />
-        <Roadmap/>
+        <Tokenomics handleClickScroll = {handleClickScroll}/>
+        
         <Contact />
         <Footer/>
       </div>

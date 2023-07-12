@@ -28,6 +28,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
     const [walletAddress, setWalletAddress] = useState("");
     const [signer, setSigner] = useState(undefined);
     const [mobile, setMobile] = useState(true);
+    const [bigMonitor, setBigMonitor] = useState(true);
 
     const handleTokenAmount = e => {
       const { value } = e.target;
@@ -38,6 +39,10 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
       if (window !== undefined){
         if(window.innerWidth >= 575){
           setMobile(false);
+        }
+
+        if(window.innerWidth > 575 && window.innerWidth <= 1750){
+          setBigMonitor(false);
         }
 
         axios.get(`https://api.coinpaprika.com/v1/price-converter?base_currency_id=bnb-binance-coin&quote_currency_id=usdt-tether&amount=1`)
@@ -238,11 +243,19 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
               </Box>
             </Box>
             :
-            <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} w = {'85%'} h={600}>
+            <Flex zIndex={0} justify = "space-between" align="space-between" display={"flex"} flexDirection={"row"} w = {'85%'} h={600}>
               <Box justify = "center" align="start">
+              {
+                bigMonitor
+                ?
                 <Box color={"white"} fontFamily = "Playfair Display" fontSize={60} w={"560px"} marginBottom={100}> 
                   O universo do vinho agora inserido na criptoeconomia 
-                </Box>     
+                </Box> 
+                :
+                <Box color={"white"} fontFamily = "Playfair Display" fontSize={40} w={"460px"} marginBottom={100}> 
+                  O universo do vinho agora inserido na criptoeconomia 
+                </Box> 
+              }    
                 <Button
                      backgroundColor = "#A6013B"
                      borderRadius = "8px"
@@ -258,12 +271,20 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                   <ShoppingCartIcon className="ml-4 h-6 w-6 text-white-500" />
                 </Button>
               </Box>
-
-              <Box justify = "center" align="start">
-                <Image src = {Wines} boxSize='560px' objectFit='fit' top={400} />
-              </Box>
-
-              <Center justify = "center" align="center" w = {400} h = {410} marginTop={40} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"} marginLeft={50}>
+              
+              {
+                bigMonitor
+                ?
+                <Box justify = "center" align="start">
+                  <Image src = {Wines} position={"absolute"} top={"25%"} left={"30%"} w={"38%"} h={"auto"} objectFit='fit' zIndex={999} />
+                </Box>
+                :
+                <Box justify = "center" align="start">
+                  <Image src = {Wines} position={"absolute"} top={"35%"} left={"30%"} w={"38%"} h={"auto"} objectFit='fit' zIndex={999} />
+                </Box>
+              }
+    
+              <Center justify = "center" align="center" w = {400} h = {410} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"} marginLeft={50}>
 
                   <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={25} w={"100%"} align={"center"}> 
                     Vinocoin ICO
@@ -353,7 +374,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                     Realizar Swap
                   </Button>
               </Center>
-            </Box>
+            </Flex>
             }
         </Flex>
     );
