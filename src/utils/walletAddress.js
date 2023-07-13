@@ -1,39 +1,7 @@
 const ownerWallet = "0xc240B7B096f57B5dB77D535244645a160d552e0F";
 
-const ICOAddress = "0x7e0450A8CFFd0428774f38D06c997e00E827d6bD";
+const ICOAddress = "0xCc86dbF107E4530C97BFF32340d9Be1eed1E9d04";
 const abiICO = [
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_round",
-				"type": "uint256"
-			}
-		],
-		"name": "changeCurrentRound",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "amountToBuy",
-				"type": "uint256"
-			}
-		],
-		"name": "invest",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
 	{
 		"anonymous": false,
 		"inputs": [
@@ -79,23 +47,37 @@ const abiICO = [
 		"type": "event"
 	},
 	{
-		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"name": "Investors",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "investorAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "round",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amountOfTokens",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amountBnbInvested",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -108,11 +90,24 @@ const abiICO = [
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "_walletAddress",
-				"type": "address"
+				"internalType": "uint256",
+				"name": "_round",
+				"type": "uint256"
 			}
 		],
+		"name": "changeCurrentRound",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "getAmountOfPurchasedTokens",
 		"outputs": [
 			{
@@ -125,8 +120,14 @@ const abiICO = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "getAmountOfPurchasedTokens",
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_walletAddress",
+				"type": "address"
+			}
+		],
+		"name": "getAmountOfPurchasedTokensByWallet",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -193,34 +194,18 @@ const abiICO = [
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "",
+				"name": "amountToBuy",
 				"type": "uint256"
-			}
-		],
-		"name": "Investors",
-		"outputs": [
+			},
 			{
 				"internalType": "address",
-				"name": "investorAddress",
+				"name": "walletAddress",
 				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "round",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amountOfTokens",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amountBnbInvested",
-				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
+		"name": "invest",
+		"outputs": [],
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -260,6 +245,26 @@ const abiICO = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]

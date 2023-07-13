@@ -91,7 +91,6 @@ function Login() {
                     className="form-control" 
                     value={userEmail}
                     onChange={handleUserEmail}
-                    pattern="[0-9]*"
                     style = {{
                         height: "40px",
                         width: "100%",
@@ -207,7 +206,6 @@ function Login() {
                     className="form-control" 
                     value={userEmail}
                     onChange={handleUserEmail}
-                    pattern="[0-9]*"
                     style = {
                       bigMonitor
                       ?

@@ -93,7 +93,6 @@ console.log(location.state.email)
                     className="form-control" 
                     value={userAuth}
                     onChange={handleUserAuth}
-                    pattern="[0-9]*"
                     style = {{
                         height: "40px",
                         width: "100%",
@@ -198,7 +197,6 @@ console.log(location.state.email)
                     className="form-control" 
                     value={userAuth}
                     onChange={handleUserAuth}
-                    pattern="[0-9]*"
                     style = {
                       bigMonitor
                       ?

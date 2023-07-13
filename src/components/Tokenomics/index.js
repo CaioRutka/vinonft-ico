@@ -11,7 +11,6 @@ const Tokenomics = ({ handleClickScroll }) => {
 
     useEffect(() => {
       if (window !== undefined){
-        console.log(window.innerWidth)
         if(window.innerWidth >= 575){
           setIsBMobile(false);
         }

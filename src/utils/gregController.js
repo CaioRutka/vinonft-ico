@@ -6,8 +6,10 @@ import withReactContent from 'sweetalert2-react-content';
 
 const MySwal = withReactContent(Swal)
 
-const authURL = "https://greg.blocklize.io/auth";
-const transactionURL = "https://greg.blocklize.io/transaction";
+const authURL = "https://greg-api.blocklize.io/auth";
+const transactionURL = "https://greg-api.blocklize.io/transaction";
+
+const apiGregeKey = "df9176c5bf58b344f9b99922a6a8201455942074d54344fa13f165b11d2cf0625bf60f6d0b25010e1a81748e3f7b412685f061e21aa02a56412813cf129dc2f7";
 
 const alertContent = (failOrNot, message, selected_icon, time) => {
   MySwal.fire({
@@ -22,7 +24,7 @@ const alertContent = (failOrNot, message, selected_icon, time) => {
 
 export const requestLogin = async (email) =>{
     try {
-        const response = await axios.post(authURL + "/requestLogin", { email: email });
+        const response = await axios.post(authURL + "/requestLogin", { email: email }, { headers: { 'Authorization': 'Bearer ' + apiGregeKey }});
         if (response.status === 201 ){
             return true;
         } else {
@@ -37,7 +39,7 @@ export const requestLogin = async (email) =>{
 
 export const gregLogin = async (email, tokenId) => {
     try {
-        const response = await axios.post(authURL + "/login", { email: email, tokenId: tokenId });
+        const response = await axios.post(authURL + "/login", { email: email, tokenId: tokenId }, { headers: { 'Authorization': 'Bearer ' + apiGregeKey }});
         if (response.status === 201 ){
             alertContent("Sucesso!", "Login Feito com sucesso.", "success", 4000);
             return response;

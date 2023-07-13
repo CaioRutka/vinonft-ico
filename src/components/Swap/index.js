@@ -10,22 +10,82 @@ import copy from "copy-to-clipboard";
 import '../../assets/fonts/Config-Regular.otf';
 import './index.css';
 
-import { ShoppingCartIcon } from '@heroicons/react/24/solid'
+import { ShoppingCartIcon, CurrencyDollarIcon } from '@heroicons/react/24/solid'
 import Wines from "../../assets/images/vinhos-moeda@2x.png";
 import VinocoinIcon from "../../assets/images/Moeda.png";
 import BNBIcon from "../../assets/images/bnb.png";
 import RealIcon from "../../assets/images/real.png";
-import { invest } from "../../utils/nftController";
+import { invest, getInvestedAmount, gregGetInvestedAmount } from "../../utils/nftController";
 
 const MySwal = withReactContent(Swal);
 
-const alertContent = (message, QrCode, pixCopiaECola) => {
+const alertContent = (failOrNot, message, selected_icon, time) => {
   MySwal.fire({
+      title: failOrNot,
       text: message,
-      confirmButtonColor: '#A6013B',
-      confirmButtonText: 'Ok',
-      imageHeight: 300,
-      imageAlt: 'Elvinos NFT'
+      icon: selected_icon,
+      timer: time,
+      timerProgressBar: true,
+      showConfirmButton: false,
+  })
+}
+
+const alertContentPix = (QrCode, pixCopiaECola, copyToClipboard) => {
+  MySwal.fire({
+    html: (
+      <Flex justify = "center" align="center" display={"flex"} flexDirection={"column"}>
+          <Box w={"100%"} textAlign={"center"} color={"#black"} fontFamily = "Montserrat" fontSize={25}>
+            Sucesso!
+          </Box>
+          <Box w={"100%"} textAlign={"center"} color={"#black"} fontFamily = "Montserrat" fontSize={20}>
+            Cobrança pix gerada com sucesso, aponte seu celular 
+            para esse QRCode, realize o pagamento, e seus Vinocoins estarão garantidos!
+          </Box>
+          <Box w={300} h={300} bg='#a5a5a5' border='3px solid black' margin={"60px 10px 40px 10px"} sx={{ borderRadius: "3%" }} >
+              <img 
+                  src={QrCode}
+                  alt="new"
+                  style = {{
+                      maxWidth: "100%",
+                      maxHeight: "100%",
+                      minWidth: "100%",
+                      minHeight: "100%",
+                      borderRadius: "3%"
+                  }}
+              />
+          </Box>
+          <Button
+              backgroundColor = "#A6013B"
+              borderRadius = "8px"
+              color = "white"
+              fontFamily = "CloserText"
+              fontSize={20}
+              padding = "10px"
+              margin = "15px"
+              width={250}
+              onClick = {copyToClipboard(pixCopiaECola)}
+              zIndex={1}
+          >      
+              Copiar
+          </Button>  
+
+          <Button
+              backgroundColor = "#A6013B"
+              borderRadius = "8px"
+              color = "white"
+              fontFamily = "CloserText"
+              fontSize={20}
+              padding = "10px"
+              margin = "15px"
+              width={250}
+              onClick={() => Swal.close()}
+              zIndex={1}
+          >      
+              Close
+          </Button>  
+      </Flex>
+    ),
+    showConfirmButton: false
   })
 }
 
@@ -42,34 +102,35 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
     const [bigMonitor, setBigMonitor] = useState(true);
 
     const [userInfo, setUserInfo] = useState([]);
-    const [logged, setUserLogged] = useState(false);
+    const [buyWithPix, setBuyWithPix] = useState(false);
+    const [logged, setLogged] = useState(false);
 
     const [loadingPix, setLoadingPix] = useState(false);
     const [PixAmount, setPixAmount] = useState(0);
     const [dolarPrice, setDolarPrice] = useState(0);
     const [cpf, setCpf] = useState('');
-    const [clientName, setClientName] = useState('');
     const [pixCopiaECola, setPixCopiaECola] = useState('');
     const [QrCode, setQrCode] = useState('');
 
-    const copyToClipboard = () => {
-      copy(pixCopiaECola);
+    const [userInvestedAmount, setUserInvestedAmount] = useState(0);
+
+    const copyToClipboard = (pixCopy) => {
+      copy(pixCopy);
       alertContent("Sucesso!", "Pix copia e cola copiado com sucesso, \
       agora é só realizar o pagamento atraves do aplicativo do seu banco.", "success", 4000);
    }
 
     const gerarCobrançaPix = async () => {
-      if (walletAddress !== null && walletAddress !== "" && cpf !== null && cpf !== "" && clientName !== null && clientName !== ""){
+      if (userInfo.walletAddress !== null && userInfo.walletAddress !== "" && cpf !== null && cpf !== "" && userInfo.email !== null && userInfo.email !== ""){
         try {
           setLoadingPix(true);
 
-          axios.get(`https://app.api-elvinos.link/gerarcobranca?cpf=${cpf}&quantity=${(PixAmount)}&name=${userInfo.email}&walletAddress=${userInfo.walletAddress}`)
+          axios.get(`https://app.api-elvinos.link/gerarcobrancaico?cpf=${cpf}&tokenQuantity=${tokenAmount}&value=${PixAmount}&name=${userInfo.email}&walletAddress=${userInfo.walletAddress}`)
               .then((response) => {
                   if ( response.status === 201 ){
                       setPixCopiaECola(response.data.pixcec);
                       setQrCode(response.data.qrcodeImage);
                   }
-                console.log(response.data);
               });
         } catch (err) {
           console.error(err.message);
@@ -78,21 +139,14 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
           alertContent("Error!", "Você deve preencher os campos de Nome, CPF e seu endereço de carteira BNB!", "warning", 4000);
       }
   };
-
+  
   useEffect (() => {
-      if(pixCopiaECola  !== '' && pixCopiaECola != null) {
-          setLoadingPix(false);
-          alertContent("Sucesso!", "Cobrança pix gerada com sucesso, aponte seu celular \
-          para esse QRCode, realize o pagamento, e seus NFT's será(ão) enviado(s) para o endereço de carteira \
-          cadastrado no site.", "success", 5000);
-      }        
-  }, [pixCopiaECola])
+    if(pixCopiaECola  !== '' && pixCopiaECola != null) {
+        setLoadingPix(false);
+        alertContentPix(QrCode, pixCopiaECola, copyToClipboard)
+    }        
+}, [pixCopiaECola])
 
-    const handleClientName = e => {
-        const { value } = e.target;
-        setClientName(value);
-    }
-    
     const handleCpf = e => {
         const { value } = e.target;
         setCpf(value);
@@ -108,7 +162,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
 
       if (localUserInfo != null && localUserInfo != undefined) {
         setUserInfo(localUserInfo);
-        setUserLogged(true);
+        setLogged(true);
       }
 
       if (window !== undefined){
@@ -130,11 +184,47 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
         axios.get(`https://economia.awesomeapi.com.br/last/USD-BRL`)
         .then((response) => {
             if ( response.status === 200 ){
-              setDolarPrice(response.data.USDBRL.low);
+              setDolarPrice(response.data.USDBRL.low * 1.05);
             }
         });
         }         
     }, [])
+
+    const getUserInvestedAmount = async e => {
+      try {
+        if(signer !== null && signer !== undefined && signer !== NaN && signer !== ""){
+          const amount = await getInvestedAmount(walletAddress, signer);
+          setUserInvestedAmount(amount);
+        }
+      } catch (error) {
+          console.log(error)
+      }
+    };
+
+    const gregGetUserInvestedAmount = async e => {
+      try {
+        if(userInfo.length != 0 && userInfo.walletAddres != undefined) {
+          console.log("Wallet");
+          console.log(userInfo.walletAddress);
+          const amount = await gregGetInvestedAmount(userInfo.walletAddress);
+          setUserInvestedAmount(amount);
+        }
+      } catch (error) {
+          console.log(error)
+      }
+    };    
+
+    useEffect(() => {
+      gregGetUserInvestedAmount();      
+    }, [userInfo]);
+
+    useEffect(() => {
+      console.log(userInvestedAmount)  
+    }, [userInvestedAmount]);
+
+    useEffect(() => {
+      getUserInvestedAmount();
+    }, [signer]);
   
     useEffect(() => {
       getCurrentWalletConnected();
@@ -146,7 +236,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
     }, [tokenAmount])     
 
     useEffect(() => {
-      setPixAmount(dolarPrice * 0.25 * tokenAmount / BNBPrice);
+      setPixAmount((dolarPrice * 0.25 * tokenAmount).toFixed(2));
     }, [tokenAmount])   
 
     const getCurrentWalletConnected = async () => {
@@ -192,16 +282,6 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
         }
     }
 
-    const handleDecrement = () => {
-        if (tokenAmount <= 1) return;
-        setTokenAmount(tokenAmount - 1);
-    }
-
-    const handleIncrement = () => {
-        if (tokenAmount >= 10) return;
-        setTokenAmount(tokenAmount + 1);
-    }
-
     return (
         <Flex zIndex={0} justify = "center" align="center" w = {'100%'} h={1050}bg="rgba(0,0,0,0.2)">
           {
@@ -212,6 +292,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                 <Box color={"white"} fontFamily = "Playfair Display" fontSize={40} w={"100%"} align={"center"} marginTop={20}> 
                   O universo do vinho agora inserido na criptoeconomia 
                 </Box>     
+                <Center display={"flex"} flexDirection={"column"} alignContent={"center"} justifyContent={"center"}>
                 <Button
                      backgroundColor = "#A6013B"
                      borderRadius = "8px"
@@ -219,27 +300,40 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                      fontFamily = "Montserrat"
                      fontSize={20}
                      padding = "10px"
-                     width={250}
-                     marginTop={20}
-                     onClick = {() => {
-                      handleClickScroll();
+                     width={buyWithPix ? 280 : 250}
+                     justifyContent={"space-between"}
+                     onClick = {() => { 
+                      if (buyWithPix == true) {
+                        setBuyWithPix(false);
+                      } else {
+                        setBuyWithPix(true);
+                      }
                      }}
                      zIndex={1}
                 >
-                  Compre Vinocoin
-                  <ShoppingCartIcon className="ml-4 h-6 w-6 text-white-500" />
+                  {buyWithPix ? "Comprar com Crypto" : "Comprar no Pix"}
+                  <CurrencyDollarIcon className="ml-4 h-6 w-6 text-white-500" />
                 </Button>
+                </Center>
 
                 {
-                logged
+                buyWithPix
                 ?
-                <Center justify = "center" align="center" w = {300} h = {550} marginTop={40} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"}>
-                  <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={25} w={"100%"} align={"center"}> 
+                <Center justify = "center" align="center" w = {300} h = {600} marginTop={40} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"}>
+                  <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={25} w={"100%"} align={"center"} paddingBottom={5}> 
                     Vinocoin ICO Pix
                   </Box> 
 
-                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={25}> 
+                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={5}> 
                     1 Vinocoin = 0.25 USDT
+                  </Box>
+
+                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={5}> 
+                    Wallet: {logged ? `${userInfo.walletAddress.substring( 0, 6 )}...${userInfo.walletAddress.substring(38)}` : `${walletAddress.substring( 0, 6 )}...${walletAddress.substring(38)}`}
+                  </Box>
+
+                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={25}> 
+                    Tokens Adiquiridos: {userInvestedAmount}
                   </Box> 
                   
                   <Box display={"flex"} flexDirection={"row"} align={"start"} w = {250}> 
@@ -287,7 +381,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                           name="amount"
                           placeholder="Amount" 
                           className="form-control" 
-                          value={logged ? PixAmount : BNBAmount}
+                          value={buyWithPix ? PixAmount : BNBAmount}
                           readOnly
                           pattern="[0-9]*"
                           style = {{
@@ -345,24 +439,32 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                        fontSize={20}
                        padding = "10px"
                        width={250}
-                       onClick = {() => { 
-                        alertContent("Pagamento via Pix em manutenção.");
-                        }}
+                       onClick = {
+                          gerarCobrançaPix
+                       }
                        zIndex={1}
                   >
                     Gerar Pix
                   </Button>
               </Center>
                 :
-                <Center justify = "center" align="center" w = {300} h = {410} marginTop={40} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"}>
+                <Center justify = "center" align="center" w = {300} h = {550} marginTop={40} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"}>
 
-                  <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={25} w={"100%"} align={"center"}> 
+                  <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={25} w={"100%"} align={"center"} paddingBottom={5}> 
                     Vinocoin ICO
                   </Box> 
 
-                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={25}> 
+                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={5}> 
                     1 Vinocoin = 0.25 USDT
                   </Box> 
+
+                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={5}> 
+                    Wallet: {logged ? `${userInfo.walletAddress.substring( 0, 6 )}...${userInfo.walletAddress.substring(38)}` : `${walletAddress.substring( 0, 6 )}...${walletAddress.substring(38)}`}
+                  </Box>
+
+                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={25}> 
+                    Tokens Adiquiridos: {userInvestedAmount}
+                  </Box>
                   
                   <Box display={"flex"} flexDirection={"row"} align={"start"} w = {250}> 
                     <Image src = {VinocoinIcon} boxSize='30px' objectFit='fit' marginRight={10}/>
@@ -409,7 +511,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                           name="amount"
                           placeholder="Amount" 
                           className="form-control" 
-                          value={logged ? PixAmount : BNBAmount}
+                          value={buyWithPix ? PixAmount : BNBAmount}
                           readOnly
                           pattern="[0-9]*"
                           style = {{
@@ -461,6 +563,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                   O universo do vinho agora inserido na criptoeconomia 
                 </Box> 
               }    
+                <Flex display={"flex"} flexDirection={"column"} alignContent={"center"} justifyContent={"center"}>
                 <Button
                      backgroundColor = "#A6013B"
                      borderRadius = "8px"
@@ -468,13 +571,21 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                      fontFamily = "Montserrat"
                      fontSize={20}
                      padding = "10px"
-                     width={250}
-                     onClick = {() => { }}
+                     width={buyWithPix ? 280 : 250}
+                     justifyContent={"space-between"}
+                     onClick = {() => { 
+                      if (buyWithPix == true) {
+                        setBuyWithPix(false);
+                      } else {
+                        setBuyWithPix(true);
+                      }
+                     }}
                      zIndex={1}
                 >
-                  Compre Vinocoin
-                  <ShoppingCartIcon className="ml-4 h-6 w-6 text-white-500" />
+                  {buyWithPix ? "Comprar com Crypto" : "Comprar no Pix"}
+                  <CurrencyDollarIcon className="ml-4 h-6 w-6 text-white-500" />
                 </Button>
+                </Flex>
               </Box>
               
               {
@@ -490,16 +601,24 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
               }
 
               {
-                logged
+                buyWithPix
                 ?
-                <Center justify = "center" align="center" w = {400} h = {550} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"} marginLeft={50}>
-                  <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={25} w={"100%"} align={"center"}> 
+                <Center justify = "center" align="center" w = {400} h = {600} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"} marginLeft={50}>
+                  <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={25} w={"100%"} align={"center"} paddingBottom={5}> 
                     Vinocoin ICO Pix
                   </Box> 
 
-                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={25}> 
+                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={5}> 
                     1 Vinocoin = 0.25 USDT
                   </Box> 
+
+                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={5}> 
+                    Wallet: {logged ? `${userInfo.walletAddress.substring( 0, 6 )}...${userInfo.walletAddress.substring(38)}` : `${walletAddress.substring( 0, 6 )}...${walletAddress.substring(38)}`}
+                  </Box>
+
+                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={25}> 
+                    Tokens Adiquiridos: {userInvestedAmount}
+                  </Box>
                   
                   <Box display={"flex"} flexDirection={"row"} align={"start"} w = {250}> 
                     <Image src = {VinocoinIcon} boxSize='30px' objectFit='fit' marginRight={10}/>
@@ -546,7 +665,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                           name="amount"
                           placeholder="Amount" 
                           className="form-control" 
-                          value={logged ? PixAmount : BNBAmount}
+                          value={buyWithPix ? PixAmount : BNBAmount}
                           readOnly
                           pattern="[0-9]*"
                           style = {{
@@ -604,23 +723,31 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                        fontSize={20}
                        padding = "10px"
                        width={250}
-                       onClick = {() => { 
-                        alertContent("Pagamento via Pix em manutenção.");
-                        }}
+                       onClick = {
+                          gerarCobrançaPix
+                       }
                        zIndex={1}
                   >
                     Gerar Pix
                   </Button>
               </Center>
                 :
-                <Center justify = "center" align="center" w = {400} h = {410} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"} marginLeft={50}>
-                  <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={25} w={"100%"} align={"center"}> 
+                <Center justify = "center" align="center" w = {400} h = {500} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"} marginLeft={50}>
+                  <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={25} w={"100%"} align={"center"} paddingBottom={5}> 
                     Vinocoin ICO
                   </Box> 
 
-                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={25}> 
+                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={5}> 
                     1 Vinocoin = 0.25 USDT
                   </Box> 
+
+                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={5}> 
+                    Wallet: {logged ? `${userInfo.walletAddress.substring( 0, 6 )}...${userInfo.walletAddress.substring(38)}` : `${walletAddress.substring( 0, 6 )}...${walletAddress.substring(38)}`}
+                  </Box>
+
+                  <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={25}> 
+                    Tokens Adiquiridos: {userInvestedAmount}
+                  </Box>
                   
                   <Box display={"flex"} flexDirection={"row"} align={"start"} w = {250}> 
                     <Image src = {VinocoinIcon} boxSize='30px' objectFit='fit' marginRight={10}/>
@@ -667,7 +794,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                           name="amount"
                           placeholder="Amount" 
                           className="form-control" 
-                          value={logged ? PixAmount : BNBAmount}
+                          value={buyWithPix ? PixAmount : BNBAmount}
                           readOnly
                           pattern="[0-9]*"
                           style = {{

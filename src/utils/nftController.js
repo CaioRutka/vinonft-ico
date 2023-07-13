@@ -45,7 +45,7 @@ export const invest = async (tokenAmount, signer) => {
                 }
         });
         
-        const txResponse = await contract.invest(tokenAmount, {
+        const txResponse = await contract.invest(tokenAmount, signer,{
             value: ethers.parseEther((BNBPrice).toString()),
         });            
 
@@ -70,3 +70,36 @@ export const invest = async (tokenAmount, signer) => {
         return null;
       }     
 };
+
+export const getInvestedAmount = async (walletAddress, signer) => {
+    try 
+    {
+      const contract = new ethers.Contract(ICOAddress, abiICO, signer);    
+      console.log("w")
+      console.log(walletAddress)
+      const res = await contract.getAmountOfPurchasedTokensByWallet(walletAddress);
+      
+      return Number(res);
+    } catch (error) {
+          alertContent("Erro", error, "warning");
+    }  
+  };
+
+export const gregGetInvestedAmount = async (_wallet) => {
+    try {
+        console.log(_wallet);
+        var wsProvider = new ethers.WebSocketProvider("wss://greatest-white-lake.bsc.discover.quiknode.pro/371be6d22daa0bc1e2d04c2dd9bfa6916fc9b843/");
+        const contractEl = new ethers.Contract(ICOAddress, ICOAddress, wsProvider);
+        
+        let amount = await contractEl.getAmountOfPurchasedTokensByWallet(_wallet);
+
+        amount = Number(amount);
+
+        return amount;
+    } catch (error) {
+        alertContent("Erro!", error, "warning", 2000);
+
+        return null;
+    }  
+    
+}

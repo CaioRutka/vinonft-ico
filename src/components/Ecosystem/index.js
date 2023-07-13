@@ -11,7 +11,6 @@ const Ecosystem = () => {
 
     useEffect(() => {
       if (window !== undefined){
-        console.log(window.innerWidth)
         if(window.innerWidth >= 575){
           setIsBMobile(false);
         }
