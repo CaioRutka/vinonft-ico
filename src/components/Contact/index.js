@@ -132,7 +132,7 @@ const Contact = () => {
                 <Flex w = {"100%"} h = {"90%"} justify = "space-between" align="space-between" display={"flex"} flexDirection={"row"}>
                   <Box h = {"100%"} w = {250} display={"flex"} flexDirection={"column"}>
                     <Flex h = {180} w = {180} borderRadius={180} backgroundColor={"white"} borderColor={"#A6013B"} borderWidth={5}>
-                      <Image src = {Alexandre} borderRadius={200} objectFit='fit' filter={"grayscale(100%)"}/>
+                      <Image src = {Alexandre} borderRadius={180} objectFit='fit' filter={"grayscale(100%)"}/>
                     </Flex>
 
                     <Box w = {200} color={"white"} fontSize={20} fontFamily={"Montserrat"} paddingTop={20}>
@@ -146,7 +146,7 @@ const Contact = () => {
 
                   <Box h = {"100%"} w = {250} display={"flex"} flexDirection={"column"}>
                     <Flex h = {180} w = {180} borderRadius={180} backgroundColor={"white"} borderColor={"#A6013B"} borderWidth={5}>
-                      <Image src = {Gabriely} borderRadius={200} objectFit='fit' filter={"grayscale(100%)"}/>
+                      <Image src = {Gabriely} borderRadius={180} objectFit='fit' filter={"grayscale(100%)"}/>
                     </Flex>
 
                     <Box w = {200} color={"white"} fontSize={20} fontFamily={"Montserrat"} paddingTop={20}>
@@ -160,7 +160,7 @@ const Contact = () => {
 
                   <Box h = {"100%"} w = {250} display={"flex"} flexDirection={"column"}>
                     <Flex h = {180} w = {180} borderRadius={180} backgroundColor={"white"} borderColor={"#A6013B"} borderWidth={5}>
-                      <Image src = {Caio} borderRadius={200} objectFit='fit' filter={"grayscale(100%)"}/>
+                      <Image src = {Caio} borderRadius={180} objectFit='fit' filter={"grayscale(100%)"}/>
                     </Flex>
 
                     <Box w = {200} color={"white"} fontSize={20} fontFamily={"Montserrat"} paddingTop={20}>
@@ -174,7 +174,7 @@ const Contact = () => {
 
                   <Box h = {"100%"} w = {250} display={"flex"} flexDirection={"column"}>
                     <Flex h = {180} w = {180} borderRadius={180} backgroundColor={"white"} borderColor={"#A6013B"} borderWidth={5} >
-                      <Image src = {Puppe} borderRadius={200} objectFit='fit' filter={"grayscale(100%)"}/>
+                      <Image src = {Puppe} borderRadius={180} objectFit='fit' filter={"grayscale(100%)"}/>
                     </Flex>
 
                     <Box w = {200} color={"white"} fontSize={20} fontFamily={"Montserrat"} paddingTop={20}>
@@ -188,7 +188,7 @@ const Contact = () => {
 
                   <Box h = {"100%"} w = {250} display={"flex"} flexDirection={"column"}>
                     <Flex h = {180} w = {180} borderRadius={180} backgroundColor={"white"} borderColor={"#A6013B"} borderWidth={5}>
-                      <Image src = {Thiago} borderRadius={200} objectFit='fit' filter={"grayscale(100%)"}/>
+                      <Image src = {Thiago} borderRadius={180} objectFit='fit' filter={"grayscale(100%)"}/>
                     </Flex>
 
                     <Box w = {200} color={"white"} fontSize={20} fontFamily={"Montserrat"} paddingTop={20}>
@@ -202,7 +202,7 @@ const Contact = () => {
 
                   <Box h = {"100%"} w = {250} display={"flex"} flexDirection={"column"}>
                     <Flex h = {180} w = {180} borderRadius={180} backgroundColor={"white"} borderColor={"#A6013B"} borderWidth={5}>
-                      <Image src = {Patrick} borderRadius={200} objectFit='fit' filter={"grayscale(100%)"}/>
+                      <Image src = {Patrick} borderRadius={180} objectFit='fit' filter={"grayscale(100%)"}/>
                     </Flex>
 
                     <Box w = {200} color={"white"} fontSize={20} fontFamily={"Montserrat"} paddingTop={20}>

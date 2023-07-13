@@ -24,7 +24,7 @@ const Tokenomics = ({ handleClickScroll }) => {
         {
         isMobile
         ?
-            <Flex zIndex={0} justify = "start" align="center" w = {'100%'} h={1700} bg="#20000B" display={"flex"} flexDirection={"column"} paddingTop={50}>
+            <Flex zIndex={0} justify = "start" align="center" w = {'100%'} h={1300} bg="#20000B" display={"flex"} flexDirection={"column"} paddingTop={50}>
                 <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'85%'} h={"85%"}>
                     <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'50%'} h={"100%"} >
                         <Box color={"white"} fontSize={40} fontFamily={"Playfair Display"} paddingBottom={50} w = {"100%"} justify = "start" align="start">
@@ -67,7 +67,7 @@ const Tokenomics = ({ handleClickScroll }) => {
                             </Box>
 
                             <Box color={"#fff"} fontSize={15} paddingLeft={25} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
-                                0X7D9053541BC674C5F9B8C9 08BAB68FAD4A900211
+                                0x27429d9ab24Ea951731EA4 b2820F238E8F66149c
                             </Box>
                         </Box>   
 
@@ -111,77 +111,77 @@ const Tokenomics = ({ handleClickScroll }) => {
                     <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'100%'} h={"100%"}>
                         <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} marginBottom={20}>
                             <Center display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#A6013B"} h = {"100%"} w = {"40%"} backgroundColor={"#A6013B"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
-                                    20%
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
+                                    30%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
-                                    Liquidez
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
+                                    DEX/CEX
                                 </Center>
                             </Center>
 
                             <Center marginLeft={20} display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#7C012C"} h = {"100%"} w = {"60%"} backgroundColor={"#7C012C"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
-                                    20%
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
+                                    5%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
-                                    Reserva listagem exchanges
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
+                                    Staking
                                 </Center>
                             </Center>
                         </Box>
 
                         <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"}  marginBottom={20}>
                             <Center display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#A6013B"} h = {"100%"} w = {"50%"} backgroundColor={"#A6013B"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "center" align="center" >
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "center" align="center" >
                                     10%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
-                                    Pré-venda fase 1
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
+                                    Venda privada
                                 </Center>
                             </Center>
 
                             <Center marginLeft={20} display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#7C012C"} h = {"100%"} w = {"50%"} backgroundColor={"#7C012C"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "center" align="center" >
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "center" align="center" >
                                     20%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
-                                    Pré-venda fase 2
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
+                                    Pré-venda
                                 </Center>
                             </Center>
                         </Box>
 
                         <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"}  marginBottom={20}>
                             <Center display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#A6013B"} h = {"100%"} w = {"100%"} backgroundColor={"#A6013B"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "center" align="center" >
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "center" align="center" >
                                     10%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
-                                    Empresa Elvinos para desenvolvimento de produtos futuros (bloqueado por 1 ano)
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
+                                    Elvinos para desenvolvimento de produtos futuros.
                                 </Center>
                             </Center>
                         </Box>
 
                         <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"}  marginBottom={20}>
                             <Center display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#A6013B"} h = {"100%"} w = {"50%"} backgroundColor={"#A6013B"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "center" align="center" >
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "center" align="center" >
                                     5%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
-                                    Staking
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
+                                    Equipe
                                 </Center>
                             </Center>
 
                             <Center marginLeft={20} display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#7C012C"} h = {"100%"} w = {"50%"} backgroundColor={"#7C012C"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "center" align="center" >
-                                    5%
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "center" align="center" >
+                                    10%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
                                     Marketing
                                 </Center>
                             </Center>
@@ -189,22 +189,22 @@ const Tokenomics = ({ handleClickScroll }) => {
 
                         <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"}  marginBottom={20}>
                             <Center display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#A6013B"} h = {"100%"} w = {"50%"} backgroundColor={"#A6013B"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "center" align="center" >
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "center" align="center" >
                                     5%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
-                                    Equipe (Bloqueado por 6 meses)
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
+                                    Airdrop
                                 </Center>
                             </Center>
 
                             <Center marginLeft={20} display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#7C012C"} h = {"100%"} w = {"50%"} backgroundColor={"#7C012C"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "center" align="center" >
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "center" align="center" >
                                     5%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
-                                    Advisors (Bloqueado por 6 meses)
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
+                                    Advisors
                                 </Center>
                             </Center>
                         </Box>
@@ -212,9 +212,9 @@ const Tokenomics = ({ handleClickScroll }) => {
                 </Box>   
             </Flex>
           :
-            <Flex zIndex={0} justify = "center" align="center" w = {'100%'} h={1000} bg="#20000B" display={"flex"} flexDirection={"column"}>
+            <Flex zIndex={0} justify = "center" align="center" w = {'100%'} h={650} bg="#20000B" display={"flex"} flexDirection={"column"}>
                 <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} w = {'85%'} h={"85%"}>
-                    <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'50%'} h={"100%"} >
+                    <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'80%'} h={"100%"}>
                         <Box color={"white"} fontSize={40} fontFamily={"Playfair Display"} paddingBottom={50} w = {"100%"} justify = "start" align="start">
                             Tokenomics
                         </Box>
@@ -255,7 +255,7 @@ const Tokenomics = ({ handleClickScroll }) => {
                             </Box>
 
                             <Box color={"#fff"} fontSize={18} paddingLeft={25} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
-                                0X7D9053541BC674C5F9B8C908BAB68FAD4A900211
+                                0x8e6754b60f04c38c908f40d 545a32cde7e11239c
                             </Box>
                         </Box>   
 
@@ -299,77 +299,77 @@ const Tokenomics = ({ handleClickScroll }) => {
                     <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'50%'} h={"100%"} paddingLeft={20}>
                         <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} marginBottom={20}>
                             <Center display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#A6013B"} h = {"100%"} w = {"30%"} backgroundColor={"#A6013B"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
-                                    20%
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
+                                    30%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
-                                    Liquidez
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
+                                    DEX/CEX
                                 </Center>
                             </Center>
 
                             <Center marginLeft={20} display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#7C012C"} h = {"100%"} w = {"70%"} backgroundColor={"#7C012C"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
-                                    20%
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
+                                    5%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
-                                    Reserva listagem exchanges
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
+                                    Staking
                                 </Center>
                             </Center>
                         </Box>
 
                         <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"}  marginBottom={20}>
                             <Center display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#A6013B"} h = {"100%"} w = {"50%"} backgroundColor={"#A6013B"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
                                     10%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
-                                    Pré-venda fase 1
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
+                                    Venda privada
                                 </Center>
                             </Center>
 
                             <Center marginLeft={20} display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#7C012C"} h = {"100%"} w = {"50%"} backgroundColor={"#7C012C"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
                                     20%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
-                                    Pré-venda fase 2
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
+                                    Pré-venda
                                 </Center>
                             </Center>
                         </Box>
 
                         <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"}  marginBottom={20}>
                             <Center display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#A6013B"} h = {"100%"} w = {"100%"} backgroundColor={"#A6013B"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
                                     10%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"80%"} justify = "start" align="start">
-                                    Empresa Elvinos para desenvolvimento de produtos futuros (bloqueado por 1 ano).
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"80%"} justify = "start" align="start" textAlign={"center"}>
+                                    Elvinos para desenvolvimento de produtos futuros. 
                                 </Center>
                             </Center>
                         </Box>
 
                         <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"}  marginBottom={20}>
                             <Center display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#A6013B"} h = {"100%"} w = {"50%"} backgroundColor={"#A6013B"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
                                     5%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
-                                    Staking
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
+                                    Equipe
                                 </Center>
                             </Center>
 
                             <Center marginLeft={20} display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#7C012C"} h = {"100%"} w = {"50%"} backgroundColor={"#7C012C"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
-                                    5%
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
+                                    10%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
                                     Marketing
                                 </Center>
                             </Center>
@@ -377,22 +377,22 @@ const Tokenomics = ({ handleClickScroll }) => {
 
                         <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"}  marginBottom={20}>
                             <Center display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#A6013B"} h = {"100%"} w = {"50%"} backgroundColor={"#A6013B"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
                                     5%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
-                                    Equipe (Bloqueado por 6 meses)
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
+                                    Airdrop
                                 </Center>
                             </Center>
 
                             <Center marginLeft={20} display={"flex"} flexDirection={"column"} color={"white"} marginBottom={20} justify = "start" align="start" borderWidth={4} borderRadius={"3%"} borderColor={"#7C012C"} h = {"100%"} w = {"50%"} backgroundColor={"#7C012C"}>
-                                <Center color={"white"} fontSize={50} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
+                                <Center color={"white"} fontSize={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
                                     5%
                                 </Center>
 
-                                <Center color={"white"} fontSize={20} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
-                                    Advisors (Bloqueado por 6 meses)
+                                <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
+                                    Advisors
                                 </Center>
                             </Center>
                         </Box>

@@ -276,11 +276,11 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                 bigMonitor
                 ?
                 <Box justify = "center" align="start">
-                  <Image src = {Wines} position={"absolute"} top={"25%"} left={"30%"} w={"38%"} h={"auto"} objectFit='fit' zIndex={999} />
+                  <Image src = {Wines} position={"absolute"} top={"25%"} left={"33%"} w={"38%"} h={"auto"} objectFit='fit' zIndex={999} />
                 </Box>
                 :
                 <Box justify = "center" align="start">
-                  <Image src = {Wines} position={"absolute"} top={"35%"} left={"30%"} w={"38%"} h={"auto"} objectFit='fit' zIndex={999} />
+                  <Image src = {Wines} position={"absolute"} top={"47%"} left={"35%"} w={"30%"} h={"auto"} objectFit='fit' zIndex={999} />
                 </Box>
               }
     
