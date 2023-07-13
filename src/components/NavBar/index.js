@@ -6,12 +6,11 @@ import { Link } from "react-router-dom";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
+import { useNavigate } from 'react-router-dom';
 
 import logoElVinos from "../../assets/images/logo-elvinos-branco.png";
 import '../../assets/fonts/CloserText-Light.otf';
 import MyModal from "../Modal";
-
-import { elVinoNFTAddress, abiVinoNFT } from '../../utils/walletAddress'
 
 const MySwal = withReactContent(Swal)
 
@@ -82,12 +81,24 @@ const NavBar = ({ accounts, setAccounts}) => {
   const [mobile, setMobile] = useState(true);
   const [menuState, setMenuState] = useState(false);
 
+  const [userInfo, setUserInfo] = useState([]);
+  const [logged, setUserLogged] = useState(false);
+
+  const navigate = useNavigate();
+
     useEffect(() => {
-        if (window !== undefined){
-          if(window.innerWidth >= 575){
-            setMobile(false);
-          }
+      var localUserInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+      if (localUserInfo != null && localUserInfo != undefined) {
+        setUserInfo(localUserInfo);
+        setUserLogged(true);
+      }
+
+      if (window !== undefined){
+        if(window.innerWidth >= 575){
+          setMobile(false);
         }
+      }
     }, [])
 
     useEffect(() => {
@@ -316,11 +327,18 @@ const NavBar = ({ accounts, setAccounts}) => {
                     fontFamily = "Montserrat"
                     fontSize={fontSize}
                     padding = {buttonPadding}
-                    onClick = {() => {}}
+                    onClick = {() => { 
+                      if (logged == true) {
+                        localStorage.removeItem("userInfo");
+                        window.location.reload(true);
+                      } else {
+                        navigate("login");
+                      }                      
+                    }}
                     maxWidth={windowWidth/3}
                     marginBottom={20}
                 >
-                    Login
+                    {logged ? "Sair" : "Login"}
                 </Button>
 
                 <Button
@@ -347,10 +365,18 @@ const NavBar = ({ accounts, setAccounts}) => {
                     fontFamily = "Montserrat"
                     fontSize={fontSize}
                     padding = {buttonPadding}
-                    onClick = {() => {}}
+                    onClick = {() => { 
+                      if (logged == true) {
+                        localStorage.removeItem("userInfo");
+                        window.history.replaceState({}, document.title);
+                        window.location.reload(true);
+                      } else {
+                        navigate("login");
+                      }                      
+                    }}
                     maxWidth={windowWidth/3}
                 >
-                    Login
+                    {logged ? "Sair" : "Login"}
                 </Button>
               <MyModal connectWallet = {connectWallet} buttonPadding = {buttonPadding} fontSize = {fontSize}/>   
               </Box>             
@@ -422,10 +448,18 @@ const NavBar = ({ accounts, setAccounts}) => {
                     fontSize={fontSize}
                     padding = {buttonPadding}
                     margin = "0 15px"
-                    onClick = {() => {}}
+                    onClick = {() => { 
+                      if (logged == true) {
+                        localStorage.removeItem("userInfo");
+                        window.history.replaceState({}, document.title);
+                        window.location.reload(true);
+                      } else {
+                        navigate("login");
+                      }                      
+                    }}
                     maxWidth={windowWidth/3}
                 >
-                    Login
+                    {logged ? "Sair" : "Login"}
                 </Button>
 
                 <Button
@@ -454,10 +488,18 @@ const NavBar = ({ accounts, setAccounts}) => {
                     fontSize={fontSize}
                     padding = {buttonPadding}
                     margin = "0 15px"
-                    onClick = {() => {}}
+                    onClick = {() => { 
+                      if (logged == true) {
+                        localStorage.removeItem("userInfo");
+                        window.history.replaceState({}, document.title)
+                        window.location.reload(true);
+                      } else {
+                        navigate("login");
+                      }                      
+                    }}
                     maxWidth={windowWidth/3}
                 >
-                    Login
+                    {logged ? "Sair" : "Login"}
                 </Button>
               <MyModal connectWallet = {connectWallet} buttonPadding = {buttonPadding} fontSize = {fontSize}/>   
               </Box>             

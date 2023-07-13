@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import {useLocation} from 'react-router-dom';
 
 import NavBar from '../../components/NavBar';
 import Footer from '../../components/Footer';
@@ -17,6 +18,14 @@ import './index.css';
 
 function Home() {
   const [accounts, setAccounts] = useState([]);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if(location.state != null) {
+      localStorage.setItem('userInfo', JSON.stringify(location.state));
+    }
+  }, []);
 
   const handleClickScroll = () => {
     const element = document.getElementById('swap-section');
