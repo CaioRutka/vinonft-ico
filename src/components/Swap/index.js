@@ -6,16 +6,19 @@ import axios from "axios";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content';
 import copy from "copy-to-clipboard";
+import { CurrencyDollarIcon } from '@heroicons/react/24/solid'
+import { useNavigate } from 'react-router-dom';
+import MyModal from "../Modal";
 
 import '../../assets/fonts/Config-Regular.otf';
 import './index.css';
 
-import { ShoppingCartIcon, CurrencyDollarIcon } from '@heroicons/react/24/solid'
 import Wines from "../../assets/images/vinhos-moeda@2x.png";
 import VinocoinIcon from "../../assets/images/Moeda.png";
 import BNBIcon from "../../assets/images/bnb.png";
 import RealIcon from "../../assets/images/real.png";
 import { invest, getInvestedAmount, gregGetInvestedAmount } from "../../utils/nftController";
+import { ICOAddress, abiICO } from '../../utils/walletAddress';
 
 const MySwal = withReactContent(Swal);
 
@@ -114,6 +117,8 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
 
     const [userInvestedAmount, setUserInvestedAmount] = useState(0);
 
+    const navigate = useNavigate();
+
     const copyToClipboard = (pixCopy) => {
       copy(pixCopy);
       alertContent("Sucesso!", "Pix copia e cola copiado com sucesso, \
@@ -121,9 +126,11 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
    }
 
     const gerarCobrançaPix = async () => {
-      if (userInfo.walletAddress !== null && userInfo.walletAddress !== "" && cpf !== null && cpf !== "" && userInfo.email !== null && userInfo.email !== ""){
+      if (userInfo.walletAddress !== null && userInfo.walletAddress !== "" && userInfo.walletAddress !== undefined && cpf !== null && cpf !== "" && userInfo.email !== null && userInfo.email !== ""){
         try {
           setLoadingPix(true);
+
+          console.log(userInfo.walletAddress);
 
           axios.get(`https://app.api-elvinos.link/gerarcobrancaico?cpf=${cpf}&tokenQuantity=${tokenAmount}&value=${PixAmount}&name=${userInfo.email}&walletAddress=${userInfo.walletAddress}`)
               .then((response) => {
@@ -135,7 +142,24 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
         } catch (err) {
           console.error(err.message);
         }
-      } else {
+      } else if (walletAddress !== null && walletAddress !== "" && walletAddress !== undefined && cpf !== null && cpf !== ""){
+        try {
+          setLoadingPix(true);
+
+          console.log(walletAddress);
+
+          axios.get(`https://app.api-elvinos.link/gerarcobrancaico?cpf=${cpf}&tokenQuantity=${tokenAmount}&value=${PixAmount}&name=BlockchainUser&walletAddress=${walletAddress}`)
+              .then((response) => {
+                  if ( response.status === 201 ){
+                      setPixCopiaECola(response.data.pixcec);
+                      setQrCode(response.data.qrcodeImage);
+                  }
+              });
+        } catch (err) {
+          console.error(err.message);
+        }
+      } 
+      else {
           alertContent("Error!", "Você deve preencher os campos de Nome, CPF e seu endereço de carteira BNB!", "warning", 4000);
       }
   };
@@ -229,15 +253,81 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
     useEffect(() => {
       getCurrentWalletConnected();
       addWalletListener();
+      
+      if ( walletAddress != "undefined" && walletAddress != "" && walletAddress !== null){ 
+        var wsProvider = new ethers.WebSocketProvider("wss://greatest-white-lake.bsc.discover.quiknode.pro/371be6d22daa0bc1e2d04c2dd9bfa6916fc9b843/");
+        const contractEl = new ethers.Contract(ICOAddress, abiICO, wsProvider);
+
+        contractEl.on("Invest", async (from, to, amount, event) => {
+          if ( to.toLowerCase() == walletAddress) {
+            alertContent("Sucesso!", `Pagamento via crypto, seus ${amount} Vinocoins já estão garantidos!`, "success", 4000);
+          }
+        })
+
+        return() => {
+          contractEl.removeAllListeners();
+        }
+      } else if ( userInfo.walletAddress != "undefined" &&  userInfo.walletAddress != "" &&  userInfo.walletAddress !== null){
+        var wsProvider = new ethers.WebSocketProvider("wss://greatest-white-lake.bsc.discover.quiknode.pro/371be6d22daa0bc1e2d04c2dd9bfa6916fc9b843/");
+        const contractEl = new ethers.Contract(ICOAddress, abiICO, wsProvider);
+
+        contractEl.on("Invest", async (from, to, amount, event) => {
+          if ( to.toLowerCase() == userInfo.walletAddress) {            
+            alertContent("Sucesso!", `Pagamento via pix recebido, seus ${amount} Vinocoins já estão garantidos!`, "success", 4000);
+            window.location.reload();
+          }
+        })
+
+        return() => {
+          contractEl.removeAllListeners();
+        }
+      }
     }, [walletAddress]);
 
     useEffect(() => {
       setBNBAmount(0.25 * tokenAmount / BNBPrice);
-    }, [tokenAmount])     
-
-    useEffect(() => {
       setPixAmount((dolarPrice * 0.25 * tokenAmount).toFixed(2));
-    }, [tokenAmount])   
+    }, [tokenAmount])     
+    
+    useEffect(() => {
+      console.log(PixAmount)
+    }, [PixAmount])
+
+    const connectMetamaskMobile = (walletID) => {
+      if (walletID === 0){
+        const META_URL = "https://metamask.app.link/dapp/";
+        const dappUrl = window.location.href.split("//")[1].split("/")[0];
+        const metamaskAppDeepLink = META_URL + dappUrl;
+        window.open(metamaskAppDeepLink, "_self");
+      } else if (walletID === 1){
+        const TRUST_URL = "https://link.trustwallet.com/open_url?coin_id=20000714&url=https://";
+        const dappUrl = window.location.href.split("//")[1].split("/")[0];
+        const trustWalletdeepLink = `${TRUST_URL}${encodeURIComponent(dappUrl)}`;  
+        window.open(trustWalletdeepLink, "_self"); 
+      }
+    };
+
+    const connectWallet = async (walletID) => {
+      if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+        try {
+          const accounts = await window.ethereum.request({
+            method: "eth_requestAccounts",
+          });
+          setWalletAddress(accounts[0]);
+          setAccounts(accounts);
+          const provider = new ethers.BrowserProvider(window.ethereum);
+          await provider.getSigner().then((s) => {setSigner(s);});
+          
+        } catch (err) {
+          console.error(err.message);
+        }
+      } else if (!window.ethereum && isMobile) {
+        connectMetamaskMobile(walletID);
+      } else {
+        /* MetaMask is not installed */
+        console.log("Please install MetaMask");
+      }
+    };
 
     const getCurrentWalletConnected = async () => {
         if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
@@ -302,6 +392,8 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                      padding = "10px"
                      width={buyWithPix ? 280 : 250}
                      justifyContent={"space-between"}
+                     marginTop={20}
+                     marginBottom={40}
                      onClick = {() => { 
                       if (buyWithPix == true) {
                         setBuyWithPix(false);
@@ -316,17 +408,22 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                 </Button>
                 </Center>
 
+                <div>
                 {
+                  (logged === true || isConnected == true)
+                  ?
+                  <div> 
+                    {
                 buyWithPix
                 ?
-                <Center justify = "center" align="center" w = {300} h = {600} marginTop={40} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"}>
+                <Center justify = "center" align="center" w = {300} h = {600} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"}>
                   <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={25} w={"100%"} align={"center"} paddingBottom={5}> 
                     Vinocoin ICO Pix
                   </Box> 
 
                   <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={5}> 
                     1 Vinocoin = 0.25 USDT
-                  </Box>
+                  </Box> 
 
                   <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={5}> 
                     Wallet: {logged ? `${userInfo.walletAddress.substring( 0, 6 )}...${userInfo.walletAddress.substring(38)}` : `${walletAddress.substring( 0, 6 )}...${walletAddress.substring(38)}`}
@@ -334,7 +431,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
 
                   <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={25}> 
                     Tokens Adiquiridos: {userInvestedAmount}
-                  </Box> 
+                  </Box>
                   
                   <Box display={"flex"} flexDirection={"row"} align={"start"} w = {250}> 
                     <Image src = {VinocoinIcon} boxSize='30px' objectFit='fit' marginRight={10}/>
@@ -446,10 +543,9 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                   >
                     Gerar Pix
                   </Button>
-              </Center>
+                </Center>
                 :
-                <Center justify = "center" align="center" w = {300} h = {550} marginTop={40} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"}>
-
+                <Center justify = "center" align="center" w = {300} h = {550} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"}>
                   <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={25} w={"100%"} align={"center"} paddingBottom={5}> 
                     Vinocoin ICO
                   </Box> 
@@ -545,8 +641,40 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                   >
                     Realizar Swap
                   </Button>
-              </Center>
-              }
+                </Center>
+                }
+                  </div>
+                  :
+                  <div>
+                    <Flex justify = "space-evenly" align="space-evenly" w = {300} h = {500} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"}>
+                  <Box color={"#A6013B"} fontFamily = "Montserrat" fontSize={25} w={"100%"} align={"center"} paddingBottom={5} paddingLeft={20} paddingRight={20}> 
+                    Realize o login ou conecte sua carteira com botões abaixo para comprar Vinocoin.
+                  </Box> 
+
+                  <Box align={"center"} paddingBottom={10}> 
+                    <Button
+                         backgroundColor = "#A6013B"
+                         borderRadius = "8px"
+                         color = "white"
+                         fontFamily = "Montserrat"
+                         fontSize={20}
+                         padding = "10px"
+                         width={250}
+                         marginBottom={20}
+                         onClick = {() => { 
+                            navigate("login"); 
+                          }}
+                         zIndex={1}
+                    >
+                      Login com Email
+                    </Button>
+
+                    <MyModal connectWallet = {connectWallet} buttonPadding = {"15px 40px 15px 40px"} fontSize = {17}/> 
+                  </Box>
+                </Flex>
+                  </div>                  
+                }
+              </div>
               </Box>
             </Box>
             :
@@ -599,11 +727,16 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                   <Image src = {Wines} position={"absolute"} top={"47%"} left={"35%"} w={"30%"} h={"auto"} objectFit='fit' zIndex={999} />
                 </Box>
               }
-
-              {
+              //AQUI
+              <div>
+                {
+                  (logged === true || isConnected == true)
+                  ?
+                  <div> 
+                    {
                 buyWithPix
                 ?
-                <Center justify = "center" align="center" w = {400} h = {600} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"} marginLeft={50}>
+                <Center justify = "center" align="center" w = {400} h = {600} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"}>
                   <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={25} w={"100%"} align={"center"} paddingBottom={5}> 
                     Vinocoin ICO Pix
                   </Box> 
@@ -730,7 +863,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                   >
                     Gerar Pix
                   </Button>
-              </Center>
+                </Center>
                 :
                 <Center justify = "center" align="center" w = {400} h = {500} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"} marginLeft={50}>
                   <Box color={"#A6013B"} fontFamily = "Playfair Display" fontSize={25} w={"100%"} align={"center"} paddingBottom={5}> 
@@ -828,8 +961,40 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                   >
                     Realizar Swap
                   </Button>
-              </Center>
-              }
+                </Center>
+                }
+                  </div>
+                  :
+                  <div>
+                    <Flex justify = "space-evenly" align="space-evenly" w = {400} h = {500} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"} marginLeft={50}>
+                  <Box color={"#A6013B"} fontFamily = "Montserrat" fontSize={25} w={"100%"} align={"center"} paddingBottom={5} paddingLeft={20} paddingRight={20}> 
+                    Realize o login ou conecte sua carteira com botões abaixo para comprar Vinocoin.
+                  </Box> 
+
+                  <Box align={"center"} paddingBottom={10}> 
+                    <Button
+                         backgroundColor = "#A6013B"
+                         borderRadius = "8px"
+                         color = "white"
+                         fontFamily = "Montserrat"
+                         fontSize={20}
+                         padding = "10px"
+                         width={250}
+                         marginBottom={20}
+                         onClick = {() => { 
+                            navigate("login"); 
+                          }}
+                         zIndex={1}
+                    >
+                      Login com Email
+                    </Button>
+
+                    <MyModal connectWallet = {connectWallet} buttonPadding = {"12px 40px 12px 40px"} fontSize = {17}/> 
+                  </Box>
+                </Flex>
+                  </div>                  
+                }
+              </div>
     
               
             </Flex>

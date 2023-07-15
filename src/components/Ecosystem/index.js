@@ -22,7 +22,7 @@ const Ecosystem = () => {
         {
         isMobile
         ?
-            <Flex zIndex={0} justify = "start" align="center" w = {'100%'} h={1350} bg="#20000B" display={"flex"} flexDirection={"column"} paddingTop={50}>
+            <Flex zIndex={0} justify = "start" align="center" w = {'100%'} h={1400} bg="#20000B" display={"flex"} flexDirection={"column"} paddingTop={50}>
                 <Center color={"white"} fontSize={40} fontFamily={"Playfair Display"} paddingBottom={20} justify = "center" align="center">
                     Conheça nosso Ecossistema
                 </Center>

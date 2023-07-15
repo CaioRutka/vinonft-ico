@@ -27,7 +27,7 @@ function Auth() {
       if(window.innerWidth >= 575){
         setIsBMobile(false);
       }
-console.log(location.state.email)
+
       if(window.innerWidth > 575 && window.innerWidth <= 1750){
         setBigMonitor(false);
       }
@@ -77,15 +77,19 @@ console.log(location.state.email)
                 Autentificação
               </Flex>
 
-              <Flex w={"75%"} display={"flex"} flexDirection={"row"} color = "white" fontFamily = "Open Sans" fontSize={12} paddingLeft={2} paddingBottom={20}>
+              <Flex w={"75%"} display={"flex"} flexDirection={"row"} color = "white" fontFamily = "Open Sans" fontSize={12} paddingLeft={2} paddingBottom={2}>
                 Foi enviado um token de Identificação para o endereço de email informado. Para prosseguir com o login, por favor preencha o campo abaixo com o token.
+              </Flex>
+
+              <Flex w={"75%"} display={"flex"} flexDirection={"row"} color = "white" fontFamily = "Open Sans" fontSize={12} paddingLeft={2} paddingBottom={10}>
+                Email: {location.state.email}
               </Flex>
 
               <Flex w={"75%"} display={"flex"} flexDirection={"row"} color = "white" fontFamily = "Open Sans" fontSize={12} paddingLeft={2} fontWeight={"bold"}>
                 Token
               </Flex>
 
-              <div style = {{width: "75%", justifyContent: "center", alignItems: "center", display:"flex", flexDirection:"column", marginBottom: 10}}>
+              <div style = {{width: "75%", justifyContent: "center", alignItems: "center", display:"flex", flexDirection:"column"}}>
                 <input 
                     type="text"
                     name="email"
@@ -126,14 +130,8 @@ console.log(location.state.email)
                         if (userAuth != "" && userAuth != null) {   
                           await gregLogin(location.state.email, userAuth).then((res) => { 
                             if (res != null){
-                              console.log(res)
-                              navigate("/", {
-                                state: {
-                                accessToken: res.data.accessToken,
-                                refreshToken: res.data.refreshToken,
-                                email: res.data.usuarioInfo.email,
-                                walletAddress: res.data.usuarioInfo.walletAddress,
-                              }});
+                              localStorage.setItem('userInfo', JSON.stringify({email: res.data.usuarioInfo.email, walletAddress: res.data.usuarioInfo.walletAddress}));
+                              navigate("/");
                             }
                           });
                         }
@@ -181,8 +179,12 @@ console.log(location.state.email)
                 Autentificação
               </Flex>
 
-              <Flex w={"75%"} display={"flex"} flexDirection={"row"} color = "white" fontFamily = "Open Sans" fontSize={bigMonitor ? "14" : "11"}  paddingLeft={2} paddingBottom={bigMonitor ? "50" : "20"}>
+              <Flex w={"75%"} display={"flex"} flexDirection={"row"} color = "white" fontFamily = "Open Sans" fontSize={bigMonitor ? "14" : "11"}  paddingLeft={2} paddingBottom={bigMonitor ? "15" : "8"}>
                 Foi enviado um token de Identificação para o endereço de email informado. Para prosseguir com o login, por favor preencha o campo abaixo com o token.
+              </Flex>
+              
+              <Flex w={"75%"} display={"flex"} flexDirection={"row"} color = "white" fontFamily = "Open Sans" fontSize={bigMonitor ? "14" : "11"}  paddingLeft={2} paddingBottom={bigMonitor ? "50" : "20"}>
+                Email: {location.state.email}
               </Flex>
 
               <Flex w={"75%"} display={"flex"} flexDirection={"row"} color = "white" fontFamily = "Open Sans" fontSize={bigMonitor ? "14" : "12"}  paddingLeft={2} fontWeight={"bold"}>
@@ -250,13 +252,8 @@ console.log(location.state.email)
                         if (userAuth != "" && userAuth != null) {   
                           await gregLogin(location.state.email, userAuth).then((res) => { 
                             if (res != null){
-                              navigate("/", {
-                                state: {
-                                accessToken: res.data.accessToken,
-                                refreshToken: res.data.refreshToken,
-                                email: res.data.usuarioInfo.email,
-                                walletAddress: res.data.usuarioInfo.walletAddress,
-                              }});
+                              localStorage.setItem('userInfo', JSON.stringify({email: res.data.usuarioInfo.email, walletAddress: res.data.usuarioInfo.walletAddress}));
+                              navigate("/");
                             }
                           });
                         }

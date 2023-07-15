@@ -19,14 +19,6 @@ import './index.css';
 function Home() {
   const [accounts, setAccounts] = useState([]);
 
-  const location = useLocation();
-
-  useEffect(() => {
-    if(location.state != null) {
-      localStorage.setItem('userInfo', JSON.stringify(location.state));
-    }
-  }, []);
-
   const handleClickScroll = () => {
     const element = document.getElementById('swap-section');
     if (element) {
@@ -49,7 +41,7 @@ function Home() {
         <ICOBox />
         <ICOAbout handleClickScroll = {handleClickScroll}/>
         <Tokenomics handleClickScroll = {handleClickScroll}/>
-        
+        <Roadmap/>        
         <Contact />
         <Footer/>
       </div>

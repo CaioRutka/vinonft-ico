@@ -2,6 +2,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { Button } from "@chakra-ui/react";
 import { isMobile } from 'react-device-detect';
+import { WalletIcon } from '@heroicons/react/24/solid';
 
 export default function MyModal({connectWallet, buttonPadding, fontSize}) {
   let [isOpen, setIsOpen] = useState(false)
@@ -18,8 +19,10 @@ export default function MyModal({connectWallet, buttonPadding, fontSize}) {
     <>
       <div>
         <Button
-            backgroundColor = "#A6013B"
+            backgroundColor = "black"
             borderRadius = "10px"
+            borderColor={"white"}
+            borderWidth={1}
             color = "white"
             fontFamily = "Montserrat"
             fontSize={fontSize}
@@ -27,7 +30,8 @@ export default function MyModal({connectWallet, buttonPadding, fontSize}) {
             margin = "0 15px"
             onClick = {openModal}
         >
-            Wallet Connect
+            Connect Wallet
+            <WalletIcon className="ml-4 h-6 w-6 text-white-500" />
         </Button>
       </div>
 

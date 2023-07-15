@@ -29,7 +29,7 @@ const ICOBox = ({handleClickScroll}) => {
             <Box w = {'70%'} h = {'70%'} display={"flex"} flexDirection={"column"}>
 
               <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'100%'} h = {"100%"}>
-                <Box color={"white"} fontFamily = "Playfair Display" fontSize={42} padding={50} paddingTop={100} paddingBottom={20} justify = "center" align="center">
+                <Box color={"white"} fontFamily = "Playfair Display" fontSize={42} padding={50} paddingTop={0} paddingBottom={20} justify = "center" align="center">
                   Pré venda
                 </Box>
 

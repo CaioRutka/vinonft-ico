@@ -2,7 +2,7 @@ import { useState, React, useEffect } from "react";
 import { Box, Button, Flex, Image, Center } from "@chakra-ui/react";
 
 import Wine from "../../assets/images/fundo-homem-token@2x.png";
-import ThreeIcon from "../../assets/images/3-icones-elvinos@2x.png";
+import ThreeIcon from "../../assets/images/Untitled-1.png";
 import '../../assets/fonts/Config-Regular.otf';
 import './index.css';
 
@@ -22,8 +22,8 @@ const Vinocoin = () => {
       {
         isMobile
         ?
-        <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} w = {'100%'} h={"100%"}>
-          <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'100%'} h = {"100%"} backgroundColor={"#000"} padding={75} >
+        <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'100%'} h={"100%"}>
+          <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'100%'} h = {"70%"} backgroundColor={"#000"} padding={75}>
             <Box color={"white"} fontFamily = "Playfair Display" fontSize={42}>
               Vinocoin
             </Box>
@@ -36,14 +36,13 @@ const Vinocoin = () => {
               “Nosso objetivo é nos tornar a maior e mais inovadora empresa de vinhos do mundo. Faça parte disso!”
             </Box>
             
-            <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingTop={25} paddingBottom={25}>
+            <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingTop={25}>
               Elvinos Obtém lucros com ecossistema e recompra tokens no mercado fazendo com que se valorize e se torne mais escasso
-            </Box>
-
-            <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} h = {'100%'}>
-              <Image src = {ThreeIcon} objectFit='fit'/>
-            </Box> 
-          </Box>                      
+            </Box>            
+          </Box>   
+          <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} w = {'100%'} h = {"auto"}>
+            <Image src = {ThreeIcon} objectFit='fit'  paddingBottom={50}/>
+          </Box>                    
         </Box>
         :
         <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} w = {'100%'} h={"100%"}>

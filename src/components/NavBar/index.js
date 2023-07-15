@@ -5,7 +5,7 @@ import { isMobile, mobileModel } from 'react-device-detect';
 import { Link } from "react-router-dom";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
+import { HamburgerIcon } from '@chakra-ui/icons'
 import { useNavigate } from 'react-router-dom';
 
 import logoElVinos from "../../assets/images/logo-elvinos-branco.png";
@@ -139,12 +139,12 @@ const NavBar = ({ accounts, setAccounts}) => {
       if (walletID === 0){
         const META_URL = "https://metamask.app.link/dapp/";
         const dappUrl = window.location.href.split("//")[1].split("/")[0];
-        const metamaskAppDeepLink = META_URL + dappUrl + "/vinocoin-ico";
+        const metamaskAppDeepLink = META_URL + dappUrl;
         window.open(metamaskAppDeepLink, "_self");
       } else if (walletID === 1){
         const TRUST_URL = "https://link.trustwallet.com/open_url?coin_id=20000714&url=https://";
         const dappUrl = window.location.href.split("//")[1].split("/")[0];
-        const trustWalletdeepLink = `${TRUST_URL}${encodeURIComponent(dappUrl  + "/vinocoin-ico")}`;  
+        const trustWalletdeepLink = `${TRUST_URL}${encodeURIComponent(dappUrl)}`;  
         window.open(trustWalletdeepLink, "_self"); 
       }
     };
@@ -320,29 +320,7 @@ const NavBar = ({ accounts, setAccounts}) => {
               ?
               <Box justify = "center" align="center" display={"flex"} flexDirection={"column"}>
                 <Button
-                    backgroundColor = "#A6013B"
-                    borderRadius = "10px"
-                    borderWidth={ 0 }
-                    color = "white"
-                    fontFamily = "Montserrat"
-                    fontSize={fontSize}
-                    padding = {buttonPadding}
-                    onClick = {() => { 
-                      if (logged == true) {
-                        localStorage.removeItem("userInfo");
-                        window.location.reload(true);
-                      } else {
-                        navigate("login");
-                      }                      
-                    }}
-                    maxWidth={windowWidth/3}
-                    marginBottom={20}
-                >
-                    {logged ? "Sair" : "Login"}
-                </Button>
-
-                <Button
-                    backgroundColor = "#A6013B"
+                    backgroundColor = "black"
                     borderRadius = "10px"
                     borderWidth={ 0 }
                     color = "white"
@@ -355,31 +333,62 @@ const NavBar = ({ accounts, setAccounts}) => {
                     Connected
                 </Button>
               </Box>
-              :
-              <Box justify = "center" align="center" display={"flex"} flexDirection={"column"}>
-                <Button
-                    backgroundColor = "#A6013B"
-                    borderRadius = "10px"
-                    borderWidth={ 0 }
-                    color = "white"
-                    fontFamily = "Montserrat"
-                    fontSize={fontSize}
-                    padding = {buttonPadding}
-                    onClick = {() => { 
-                      if (logged == true) {
-                        localStorage.removeItem("userInfo");
-                        window.history.replaceState({}, document.title);
-                        window.location.reload(true);
-                      } else {
-                        navigate("login");
-                      }                      
-                    }}
-                    maxWidth={windowWidth/3}
-                >
-                    {logged ? "Sair" : "Login"}
-                </Button>
-              <MyModal connectWallet = {connectWallet} buttonPadding = {buttonPadding} fontSize = {fontSize}/>   
-              </Box>             
+              :              
+              <Flex>
+                {
+                  logged
+                  ?
+                  <Box justify = "center" align="center" display={"flex"} flexDirection={"column"}>
+                    <Button
+                        backgroundColor = "#A6013B"
+                        borderRadius = "10px"
+                        borderWidth={ 0 }
+                        color = "white"
+                        fontFamily = "Montserrat"
+                        fontSize={fontSize}
+                        padding = {buttonPadding}
+                        onClick = {() => { 
+                          if (logged == true) {
+                            localStorage.removeItem("userInfo");
+                            window.history.replaceState({}, document.title);
+                            window.location.reload(true);
+                          } else {
+                            navigate("login");
+                          }                      
+                        }}
+                        maxWidth={windowWidth/3}
+                    >
+                    Sair
+                    </Button> 
+                  </Box>
+                  :
+                  <Center justify = "center" align="center" display={"flex"} flexDirection={"column"}>
+                    <Button
+                        backgroundColor = "#A6013B"
+                        borderRadius = "10px"
+                        borderWidth={ 0 }
+                        color = "white"
+                        fontFamily = "Montserrat"
+                        fontSize={fontSize}
+                        padding = {buttonPadding}
+                        marginBottom={20}
+                        onClick = {() => { 
+                          if (logged == true) {
+                            localStorage.removeItem("userInfo");
+                            window.history.replaceState({}, document.title);
+                            window.location.reload(true);
+                          } else {
+                            navigate("login");
+                          }                      
+                        }}
+                        maxWidth={windowWidth/3}
+                    >
+                    Login com Email
+                    </Button>
+                    <MyModal connectWallet = {connectWallet} buttonPadding = {buttonPadding} fontSize = {fontSize}/>   
+                  </Center>
+                } 
+              </Flex>             
             }
             </Flex>
               
@@ -447,62 +456,67 @@ const NavBar = ({ accounts, setAccounts}) => {
                     fontFamily = "Montserrat"
                     fontSize={fontSize}
                     padding = {buttonPadding}
-                    margin = "0 15px"
-                    onClick = {() => { 
-                      if (logged == true) {
-                        localStorage.removeItem("userInfo");
-                        window.history.replaceState({}, document.title);
-                        window.location.reload(true);
-                      } else {
-                        navigate("login");
-                      }                      
-                    }}
-                    maxWidth={windowWidth/3}
-                >
-                    {logged ? "Sair" : "Login"}
-                </Button>
-
-                <Button
-                    backgroundColor = "#A6013B"
-                    borderRadius = "10px"
-                    borderWidth={ 0 }
-                    color = "white"
-                    fontFamily = "Montserrat"
-                    fontSize={fontSize}
-                    padding = {buttonPadding}
-                    margin = "0 15px"
                     onClick = {() => {}}
                     maxWidth={windowWidth/3}
                 >
                     Connected
                 </Button>
               </Box>
-              :
-              <Box justify = "center" align="center" display={"flex"} flexDirection={"row"}>
-                <Button
-                    backgroundColor = "#A6013B"
-                    borderRadius = "10px"
-                    borderWidth={ 0 }
-                    color = "white"
-                    fontFamily = "Montserrat"
-                    fontSize={fontSize}
-                    padding = {buttonPadding}
-                    margin = "0 15px"
-                    onClick = {() => { 
-                      if (logged == true) {
-                        localStorage.removeItem("userInfo");
-                        window.history.replaceState({}, document.title)
-                        window.location.reload(true);
-                      } else {
-                        navigate("login");
-                      }                      
-                    }}
-                    maxWidth={windowWidth/3}
-                >
-                    {logged ? "Sair" : "Login"}
-                </Button>
-              <MyModal connectWallet = {connectWallet} buttonPadding = {buttonPadding} fontSize = {fontSize}/>   
-              </Box>             
+              :              
+              <Flex>
+                {
+                  logged
+                  ?
+                  <Box justify = "center" align="center" display={"flex"} flexDirection={"row"}>
+                    <Button
+                        backgroundColor = "#A6013B"
+                        borderRadius = "10px"
+                        borderWidth={ 0 }
+                        color = "white"
+                        fontFamily = "Montserrat"
+                        fontSize={fontSize}
+                        padding = {buttonPadding}
+                        onClick = {() => { 
+                          if (logged == true) {
+                            localStorage.removeItem("userInfo");
+                            window.history.replaceState({}, document.title);
+                            window.location.reload(true);
+                          } else {
+                            navigate("login");
+                          }                      
+                        }}
+                        maxWidth={windowWidth/3}
+                    >
+                    Sair
+                    </Button> 
+                  </Box>
+                  :
+                  <Box justify = "center" align="center" display={"flex"} flexDirection={"row"}>
+                    <Button
+                        backgroundColor = "#A6013B"
+                        borderRadius = "10px"
+                        borderWidth={ 0 }
+                        color = "white"
+                        fontFamily = "Montserrat"
+                        fontSize={fontSize}
+                        padding = {buttonPadding}
+                        onClick = {() => { 
+                          if (logged == true) {
+                            localStorage.removeItem("userInfo");
+                            window.history.replaceState({}, document.title);
+                            window.location.reload(true);
+                          } else {
+                            navigate("login");
+                          }                      
+                        }}
+                        maxWidth={windowWidth/3}
+                    >
+                    Login com Email
+                    </Button>
+                    <MyModal connectWallet = {connectWallet} buttonPadding = {buttonPadding} fontSize = {fontSize}/>   
+                  </Box>
+                } 
+              </Flex>             
             }
         </Flex>
         }

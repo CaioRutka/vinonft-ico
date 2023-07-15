@@ -1,6 +1,6 @@
 const ownerWallet = "0xc240B7B096f57B5dB77D535244645a160d552e0F";
 
-const ICOAddress = "0xCc86dbF107E4530C97BFF32340d9Be1eed1E9d04";
+const ICOAddress = "0xd1a8cb996deb19871d9ccea3e33641cddf24d358";
 const abiICO = [
 	{
 		"anonymous": false,
