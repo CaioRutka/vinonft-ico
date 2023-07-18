@@ -27,21 +27,42 @@ function Home() {
     }
   };
 
+  const handleClickScrollAbout = () => {
+    const element = document.getElementById('about-section');
+    if (element) {
+      // 👇 Will scroll smoothly to the top of the next section
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleClickScrollRoad = () => {
+    const element = document.getElementById('road-section');
+    if (element) {
+      // 👇 Will scroll smoothly to the top of the next section
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (    
     <div className="overlay">
       <div className="overlay">
-        <NavBar accounts = { accounts } setAccounts = {setAccounts}/>
+        <NavBar accounts = { accounts } setAccounts = {setAccounts} handleClickScrollAbout = {handleClickScrollAbout} handleClickScrollRoad = {handleClickScrollRoad}/>
         <div id="swap-section">
           <Swap accounts = { accounts } setAccounts = {setAccounts} handleClickScroll = {handleClickScroll}/>
         </div>
         
-        <About handleClickScroll = {handleClickScroll}/>
+        <div id="about-section">
+          <About handleClickScroll = {handleClickScroll}/>      
+        </div>
+
         <Ecosystem />
         <Vinocoin />
         <ICOBox />
         <ICOAbout handleClickScroll = {handleClickScroll}/>
         <Tokenomics handleClickScroll = {handleClickScroll}/>
-        <Roadmap/>        
+        <div id="road-section">
+          <Roadmap/>             
+        </div>   
         <Contact />
         <Footer/>
       </div>

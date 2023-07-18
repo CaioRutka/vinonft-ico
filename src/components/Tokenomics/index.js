@@ -65,8 +65,8 @@ const Tokenomics = ({ handleClickScroll }) => {
                                 CONTRATO:
                             </Box>
 
-                            <Box color={"#fff"} fontSize={15} paddingLeft={25} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
-                                0x27429d9ab24Ea951731EA4 b2820F238E8F66149c
+                            <Box color={"#fff"} fontSize={12.5} paddingLeft={25} w = {"100%"} fontFamily={"Montserrat"} justify = "start" align="start">
+                                0x8e6754b60f04c38c908f40d545a32cde7e11239c
                             </Box>
                         </Box>   
 
@@ -254,7 +254,7 @@ const Tokenomics = ({ handleClickScroll }) => {
                             </Box>
 
                             <Box color={"#fff"} fontSize={18} paddingLeft={25} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
-                                0x8e6754b60f04c38c908f40d 545a32cde7e11239c
+                                0x8e6754b60f04c38c908f40d545a32cde7e11239c
                             </Box>
                         </Box>   
 

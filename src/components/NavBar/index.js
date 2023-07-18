@@ -67,7 +67,7 @@ function getImageFromNft(url) {
   });
 }
 
-const NavBar = ({ accounts, setAccounts}) => {
+const NavBar = ({ accounts, setAccounts, handleClickScrollRoad, handleClickScrollAbout}) => {
   const isConnected = Boolean(accounts[0]);
   const [walletAddress, setWalletAddress] = useState("");
   const [signer, setSigner] = useState(undefined);
@@ -85,6 +85,8 @@ const NavBar = ({ accounts, setAccounts}) => {
   const [logged, setUserLogged] = useState(false);
 
   const navigate = useNavigate();
+
+  const [disconnectedWallet, setDisconnectedWallet] = useState(false);
 
     useEffect(() => {
       var localUserInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -122,7 +124,9 @@ const NavBar = ({ accounts, setAccounts}) => {
     }, [windowWidth])
 
     useEffect(() => {
-        getCurrentWalletConnected();
+        if (disconnectedWallet == false) {
+          getCurrentWalletConnected();
+        }
         addWalletListener();
         checkNetwork();
     }, [walletAddress]);
@@ -155,6 +159,7 @@ const NavBar = ({ accounts, setAccounts}) => {
           const accounts = await window.ethereum.request({
             method: "eth_requestAccounts",
           });
+          setDisconnectedWallet(false);
           setWalletAddress(accounts[0]);
           setAccounts(accounts);
           const provider = new ethers.BrowserProvider(window.ethereum);
@@ -165,6 +170,23 @@ const NavBar = ({ accounts, setAccounts}) => {
         }
       } else if (!window.ethereum && isMobile) {
         connectMetamaskMobile(walletID);
+      } else {
+        /* MetaMask is not installed */
+        console.log("Please install MetaMask");
+      }
+    };
+
+    const disconnectWallet = async () => {
+      if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+        try {
+          setDisconnectedWallet(true);
+          setWalletAddress("");
+          setAccounts([]);
+          setSigner(undefined);
+          
+        } catch (err) {
+          console.error(err.message);
+        }
       } else {
         /* MetaMask is not installed */
         console.log("Please install MetaMask");
@@ -287,31 +309,31 @@ const NavBar = ({ accounts, setAccounts}) => {
             <Flex justify = "space-between" align="start" display={"flex"} flexDirection={"row"} w = {"100%"}>
             <Flex justify = "start" align="start" display={"flex"} flexDirection={"column"}>
               <Link to = "/">
-                <Box color={"white"} fontFamily = "Montserrat" fontSize={fontSize}  padding={3}> Home </Box>
+                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize}  padding={3}> Home </Box>
               </Link> 
       
-              <Link to = "/">
-                <Box color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Sobre Nos </Box>
+              <Link onClick = {() => { handleClickScrollAbout(); }}>
+                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Sobre Nos </Box>
               </Link> 
 
-              <Link to = "/">
-                <Box color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Wallet </Box>
+              <Link to = "https://elvinos.gitbook.io/whitepapper-vinocoin/" target="_blank">
+                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Whitepaper </Box>
               </Link> 
 
-              <Link to = "/">
-                <Box  color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> E-commerce </Box>
+              <Link to = "https://elvinos.com.br/" target="_blank">
+                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> E-commerce </Box>
               </Link> 
 
-              <Link to = "/">
-                <Box  color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> VinoFlix </Box>
+              <Link to = "https://vino.themembers.com.br/login" target="_blank">
+                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> VinoFlix </Box>
               </Link> 
 
-              <Link to = "/">
-                <Box  color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> NFTs </Box>
+              <Link to = "https://elvinos.com.br/nfts/" target="_blank">
+                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> NFTs </Box>
               </Link> 
 
-              <Link to = "/">
-                <Box color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Roadmap </Box>
+              <Link onClick = {() => { handleClickScrollRoad(); }}>
+                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Roadmap </Box>
               </Link> 
             </Flex>
 
@@ -320,17 +342,17 @@ const NavBar = ({ accounts, setAccounts}) => {
               ?
               <Box justify = "center" align="center" display={"flex"} flexDirection={"column"}>
                 <Button
-                    backgroundColor = "black"
+                    backgroundColor = "#A6013B"
                     borderRadius = "10px"
                     borderWidth={ 0 }
                     color = "white"
                     fontFamily = "Montserrat"
                     fontSize={fontSize}
                     padding = {buttonPadding}
-                    onClick = {() => {}}
+                    onClick = {disconnectWallet}
                     maxWidth={windowWidth/3}
                 >
-                    Connected
+                    Disconnect Wallet
                 </Button>
               </Box>
               :              
@@ -420,27 +442,27 @@ const NavBar = ({ accounts, setAccounts}) => {
                 <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize}  padding={3}> Home </Box>
               </Link> 
       
-              <Link to = "/">
+              <Link onClick = {() => { handleClickScrollAbout(); }}>
                 <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Sobre Nos </Box>
               </Link> 
 
-              <Link to = "/">
-                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Wallet </Box>
+              <Link to = "https://elvinos.gitbook.io/whitepapper-vinocoin/" target="_blank">
+                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Whitepaper </Box>
               </Link> 
 
-              <Link to = "/">
+              <Link to = "https://elvinos.com.br/" target="_blank">
                 <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> E-commerce </Box>
               </Link> 
 
-              <Link to = "/">
+              <Link to = "https://vino.themembers.com.br/login" target="_blank">
                 <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> VinoFlix </Box>
               </Link> 
 
-              <Link to = "/">
+              <Link to = "https://elvinos.com.br/nfts/" target="_blank">
                 <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> NFTs </Box>
               </Link> 
 
-              <Link to = "/">
+              <Link onClick = {() => { handleClickScrollRoad(); }}>
                 <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Roadmap </Box>
               </Link> 
             </Flex>
@@ -456,10 +478,10 @@ const NavBar = ({ accounts, setAccounts}) => {
                     fontFamily = "Montserrat"
                     fontSize={fontSize}
                     padding = {buttonPadding}
-                    onClick = {() => {}}
+                    onClick = {disconnectWallet}
                     maxWidth={windowWidth/3}
                 >
-                    Connected
+                    Disconnect Wallet
                 </Button>
               </Box>
               :              

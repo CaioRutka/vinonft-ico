@@ -130,8 +130,6 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
         try {
           setLoadingPix(true);
 
-          console.log(userInfo.walletAddress);
-
           axios.get(`https://app.api-elvinos.link/gerarcobrancaico?cpf=${cpf}&tokenQuantity=${tokenAmount}&value=${PixAmount}&name=${userInfo.email}&walletAddress=${userInfo.walletAddress}`)
               .then((response) => {
                   if ( response.status === 201 ){
@@ -145,8 +143,6 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
       } else if (walletAddress !== null && walletAddress !== "" && walletAddress !== undefined && cpf !== null && cpf !== ""){
         try {
           setLoadingPix(true);
-
-          console.log(walletAddress);
 
           axios.get(`https://app.api-elvinos.link/gerarcobrancaico?cpf=${cpf}&tokenQuantity=${tokenAmount}&value=${PixAmount}&name=BlockchainUser&walletAddress=${walletAddress}`)
               .then((response) => {
@@ -228,8 +224,6 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
     const gregGetUserInvestedAmount = async e => {
       try {
         if(userInfo.length != 0 && userInfo.walletAddres != undefined) {
-          console.log("Wallet");
-          console.log(userInfo.walletAddress);
           const amount = await gregGetInvestedAmount(userInfo.walletAddress);
           setUserInvestedAmount(amount);
         }
@@ -727,7 +721,6 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                   <Image src = {Wines} position={"absolute"} top={"47%"} left={"35%"} w={"30%"} h={"auto"} objectFit='fit' zIndex={999} />
                 </Box>
               }
-              //AQUI
               <div>
                 {
                   (logged === true || isConnected == true)

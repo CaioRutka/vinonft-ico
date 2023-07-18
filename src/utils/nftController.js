@@ -24,14 +24,12 @@ const alertContent = (failOrNot, message, selected_icon, time) => {
 
 export const invest = async (tokenAmount, signer) => {
     try {
-        console.log(signer)
         const contract = new ethers.Contract(ICOAddress, abiICO, signer); 
 
         let round = await contract.getCurrentRound();
         let roundPrice;
         var BNBPrice;
 
-        console.log(round)
         if (round == 1) {
             roundPrice = 0.25
         } else if (round == 2) {
@@ -75,8 +73,6 @@ export const getInvestedAmount = async (walletAddress, signer) => {
     try 
     {
       const contract = new ethers.Contract(ICOAddress, abiICO, signer);    
-      console.log("w")
-      console.log(walletAddress)
       const res = await contract.getAmountOfPurchasedTokensByWallet(walletAddress);
       
       return Number(res);
@@ -87,7 +83,6 @@ export const getInvestedAmount = async (walletAddress, signer) => {
 
 export const gregGetInvestedAmount = async (_wallet) => {
     try {
-        console.log(_wallet);
         var wsProvider = new ethers.WebSocketProvider("wss://greatest-white-lake.bsc.discover.quiknode.pro/371be6d22daa0bc1e2d04c2dd9bfa6916fc9b843/");
         const contractEl = new ethers.Contract(ICOAddress, ICOAddress, wsProvider);
         
