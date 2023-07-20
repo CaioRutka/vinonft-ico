@@ -1,13 +1,16 @@
-import { useState, React, useEffect } from "react";
-import { Button, Flex, Image, Box, useColorMode, Center, IconButton } from "@chakra-ui/react";
+import { useState, React, useEffect, useContext } from "react";
+import { Button, Flex, Image, Box, Center, IconButton } from "@chakra-ui/react";
 import { ethers } from "ethers";
-import { isMobile, mobileModel } from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 import { Link } from "react-router-dom";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content';
 import { HamburgerIcon } from '@chakra-ui/icons'
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 
+import i18n from '../../i18n';
+import LocaleContext from '../../LocaleContext';
 import logoElVinos from "../../assets/images/logo-elvinos-branco.png";
 import '../../assets/fonts/CloserText-Light.otf';
 import MyModal from "../Modal";
@@ -55,18 +58,6 @@ const networks = {
     }
 };
 
-function getImageFromNft(url) {
-  return fetch(url)
-  .then((response) => response.json())
-  .then((responseJson) => {
-      return responseJson;        
-  })
-  .catch((error) => {
-      alertContent("Erro!", error, "warning", 2000);
-    console.error(error);
-  });
-}
-
 const NavBar = ({ accounts, setAccounts, handleClickScrollRoad, handleClickScrollAbout}) => {
   const isConnected = Boolean(accounts[0]);
   const [walletAddress, setWalletAddress] = useState("");
@@ -84,32 +75,39 @@ const NavBar = ({ accounts, setAccounts, handleClickScrollRoad, handleClickScrol
   const [userInfo, setUserInfo] = useState([]);
   const [logged, setUserLogged] = useState(false);
 
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [disconnectedWallet, setDisconnectedWallet] = useState(false);
 
-    useEffect(() => {
-      var localUserInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const { locale } = useContext(LocaleContext);
+  
+  function changeLocale (l) {
+    if (locale !== l) {
+      i18n.changeLanguage(l);
+    }
+  }
 
-      if (localUserInfo != null && localUserInfo != undefined) {
-        setUserInfo(localUserInfo);
-        setUserLogged(true);
+  useEffect(() => {
+    var localUserInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (localUserInfo != null && localUserInfo != undefined) {
+      setUserInfo(localUserInfo);
+      setUserLogged(true);
+    }
+    if (window !== undefined){
+      if(window.innerWidth >= 575){
+        setMobile(false);
       }
+    }
+  }, [])
 
-      if (window !== undefined){
-        if(window.innerWidth >= 575){
-          setMobile(false);
-        }
-      }
-    }, [])
+  useEffect(() => {
+    if (window !== undefined){
+      setWindowWidth(window.innerWidth);
+    } 
+  }, [])
 
-    useEffect(() => {
-      if (window !== undefined){
-        setWindowWidth(window.innerWidth);
-      } 
-    }, [])
-
-    useEffect(() => {
+  useEffect(() => {
       if(windowWidth <= 500) {
         setFontSize(12);
         setLogoW(102);
@@ -121,167 +119,167 @@ const NavBar = ({ accounts, setAccounts, handleClickScrollRoad, handleClickScrol
         setLogoH(62.73);
         setButtonPadding("10px 20px 10px 20px");
       }
-    }, [windowWidth])
+  }, [windowWidth])
 
-    useEffect(() => {
-        if (disconnectedWallet == false) {
-          getCurrentWalletConnected();
-        }
-        addWalletListener();
-        checkNetwork();
-    }, [walletAddress]);
-
-    const changeMenuState = () => {
-      if (menuState == true) {
-        setMenuState(false);
-      } else if (menuState == false) {
-        setMenuState(true);
+  useEffect(() => {
+      if (disconnectedWallet == false) {
+        getCurrentWalletConnected();
       }
-    };
+      addWalletListener();
+      checkNetwork();
+  }, [walletAddress]);
 
-    const connectMetamaskMobile = (walletID) => {
-      if (walletID === 0){
-        const META_URL = "https://metamask.app.link/dapp/";
-        const dappUrl = window.location.href.split("//")[1].split("/")[0];
-        const metamaskAppDeepLink = META_URL + dappUrl;
-        window.open(metamaskAppDeepLink, "_self");
-      } else if (walletID === 1){
-        const TRUST_URL = "https://link.trustwallet.com/open_url?coin_id=20000714&url=https://";
-        const dappUrl = window.location.href.split("//")[1].split("/")[0];
-        const trustWalletdeepLink = `${TRUST_URL}${encodeURIComponent(dappUrl)}`;  
-        window.open(trustWalletdeepLink, "_self"); 
-      }
-    };
+  const changeMenuState = () => {
+    if (menuState == true) {
+      setMenuState(false);
+    } else if (menuState == false) {
+      setMenuState(true);
+    }
+  };
+
+  const connectMetamaskMobile = (walletID) => {
+    if (walletID === 0){
+      const META_URL = "https://metamask.app.link/dapp/";
+      const dappUrl = window.location.href.split("//")[1].split("/")[0];
+      const metamaskAppDeepLink = META_URL + dappUrl;
+      window.open(metamaskAppDeepLink, "_self");
+    } else if (walletID === 1){
+      const TRUST_URL = "https://link.trustwallet.com/open_url?coin_id=20000714&url=https://";
+      const dappUrl = window.location.href.split("//")[1].split("/")[0];
+      const trustWalletdeepLink = `${TRUST_URL}${encodeURIComponent(dappUrl)}`;  
+      window.open(trustWalletdeepLink, "_self"); 
+    }
+  };
   
-    const connectWallet = async (walletID) => {
-      if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
-        try {
-          const accounts = await window.ethereum.request({
-            method: "eth_requestAccounts",
-          });
-          setDisconnectedWallet(false);
-          setWalletAddress(accounts[0]);
-          setAccounts(accounts);
-          const provider = new ethers.BrowserProvider(window.ethereum);
-          await provider.getSigner().then((s) => {setSigner(s);});
-          
-        } catch (err) {
-          console.error(err.message);
-        }
-      } else if (!window.ethereum && isMobile) {
-        connectMetamaskMobile(walletID);
-      } else {
-        /* MetaMask is not installed */
-        console.log("Please install MetaMask");
-      }
-    };
-
-    const disconnectWallet = async () => {
-      if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
-        try {
-          setDisconnectedWallet(true);
-          setWalletAddress("");
-          setAccounts([]);
-          setSigner(undefined);
-          
-        } catch (err) {
-          console.error(err.message);
-        }
-      } else {
-        /* MetaMask is not installed */
-        console.log("Please install MetaMask");
-      }
-    };
-  
-    const getCurrentWalletConnected = async () => {
-      if (window.ethereum || isMobile) {
-        try {
-          const accounts = await window.ethereum.request({
-            method: "eth_accounts",
-          });
-          if (accounts.length > 0) {
-              setWalletAddress(accounts[0]);
-              setAccounts(accounts);
-              const provider = new ethers.BrowserProvider(window.ethereum);
-              await provider.getSigner().then((s) => {setSigner(s);});
-          } else {
-            console.log("Connect to MetaMask using the Connect button");
-          }
-        } catch (err) {
-          console.error(err.message);
-        }
-      } else {
-        /* MetaMask is not installed */
-        console.log("Please install MetaMask");
-      }
-    };
-  
-    const addWalletListener = async () => {
-      if (window.ethereum || isMobile) {
-        window.ethereum.on("accountsChanged", async (accounts) => {
-          setWalletAddress(accounts[0]);
-          setAccounts(accounts);
-          const provider = new ethers.BrowserProvider(window.ethereum);
-          await provider.getSigner().then((s) => {setSigner(s);});
+  const connectWallet = async (walletID) => {
+    if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+      try {
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
         });
-      } else {
-        /* MetaMask is not installed */
-        setWalletAddress("");
-        console.log("Please install MetaMask");
+        setDisconnectedWallet(false);
+        setWalletAddress(accounts[0]);
+        setAccounts(accounts);
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        await provider.getSigner().then((s) => {setSigner(s);});
+        
+      } catch (err) {
+        console.error(err.message);
       }
+    } else if (!window.ethereum && isMobile) {
+      connectMetamaskMobile(walletID);
+    } else {
+      /* MetaMask is not installed */
+      console.log("Please install MetaMask");
+    }
+  };
+
+  const disconnectWallet = async () => {
+    if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+      try {
+        setDisconnectedWallet(true);
+        setWalletAddress("");
+        setAccounts([]);
+        setSigner(undefined);
+        
+      } catch (err) {
+        console.error(err.message);
+      }
+    } else {
+      /* MetaMask is not installed */
+      console.log("Please install MetaMask");
+    }
+  };
+  
+  const getCurrentWalletConnected = async () => {
+    if (window.ethereum || isMobile) {
+      try {
+        const accounts = await window.ethereum.request({
+          method: "eth_accounts",
+        });
+        if (accounts.length > 0) {
+            setWalletAddress(accounts[0]);
+            setAccounts(accounts);
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            await provider.getSigner().then((s) => {setSigner(s);});
+        } else {
+          console.log("Connect to MetaMask using the Connect button");
+        }
+      } catch (err) {
+        console.error(err.message);
+      }
+    } else {
+      /* MetaMask is not installed */
+      console.log("Please install MetaMask");
+    }
+  };
+
+  const addWalletListener = async () => {
+    if (window.ethereum || isMobile) {
+      window.ethereum.on("accountsChanged", async (accounts) => {
+        setWalletAddress(accounts[0]);
+        setAccounts(accounts);
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        await provider.getSigner().then((s) => {setSigner(s);});
+      });
+    } else {
+      /* MetaMask is not installed */
+      setWalletAddress("");
+      console.log("Please install MetaMask");
+    }
+  };
+
+  const checkNetwork = async () => {
+      if (window.ethereum || isMobile) {
+        const currentChainId = await window.ethereum.request({
+          method: 'eth_chainId',
+        });           
+        if (currentChainId === `0x${Number(56).toString(16)}`) {
+        } else if (currentChainId !== `0x${Number(56).toString(16)}`) {
+          switchNetwork(currentChainId);
+        }
+      }    
     };
   
-    const checkNetwork = async () => {
-        if (window.ethereum || isMobile) {
-          const currentChainId = await window.ethereum.request({
-            method: 'eth_chainId',
-          });           
-          if (currentChainId === `0x${Number(56).toString(16)}`) {
-          } else if (currentChainId !== `0x${Number(56).toString(16)}`) {
-            switchNetwork(currentChainId);
-          }
-        }    
-      };
-    
-      const switchNetwork = async () => {
-          try{
+  const switchNetwork = async () => {
+      try{
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: `0x${Number(56).toString(16)}`}],
+        });
+        window.location.reload();
+      } catch (err) {
+        if (isMobile) {
+          const errorCode = err.data?.originalError?.code
+          if (errorCode && errorCode === 4902) {
             await window.ethereum.request({
-              method: 'wallet_switchEthereumChain',
-              params: [{ chainId: `0x${Number(56).toString(16)}`}],
+              method: "wallet_addEthereumChain",
+              params: [
+                {
+                  ...networks["bnb"]
+                }
+              ]
             });
-            window.location.reload();
-          } catch (err) {
-            if (isMobile) {
-              const errorCode = err.data?.originalError?.code
-              if (errorCode && errorCode === 4902) {
-                await window.ethereum.request({
-                  method: "wallet_addEthereumChain",
-                  params: [
-                    {
-                      ...networks["bnb"]
-                    }
-                  ]
-                });
-              window.location.reload();
-              }
-            } else {
-              if (err.code === 4902) {
-                await window.ethereum.request({
-                  method: "wallet_addEthereumChain",
-                  params: [
-                    {
-                      ...networks["bnb"]
-                    }
-                  ]
-                });
-              window.location.reload();
-              }
-            }
-            
-            // handle other "switch" errors
-            console.error(err);
-            }
-          }   
+          window.location.reload();
+          }
+        } else {
+          if (err.code === 4902) {
+            await window.ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: [
+                {
+                  ...networks["bnb"]
+                }
+              ]
+            });
+          window.location.reload();
+          }
+        }
+        
+          // handle other "switch" errors
+          console.error(err);
+          }
+        }   
 
     return (
       <div>
@@ -294,9 +292,11 @@ const NavBar = ({ accounts, setAccounts, handleClickScrollRoad, handleClickScrol
             ?
             <Flex justify = "space-between" align="start" display={"flex"} flexDirection={"column"} padding="28px" bg="rgba(0,0,0,0.5)" borderBottomWidth={1} height={300} >
               <Flex justify = "space-between" align="center" display={"flex"} flexDirection={"row"} w = {"100%"} >
-                <Link to = "/">
-                  <Image src = {logoElVinos} width={logoW} height={logoH} objectFit='fit'/>
-              </Link>
+                <Flex justify = "space-between" align="center">
+                  <Link to = "/">
+                      <Image src = {logoElVinos} width={logoW} height={logoH} objectFit='fit'/>
+                  </Link>        
+                </Flex>
 
               <IconButton
                 colorScheme='white'
@@ -313,7 +313,7 @@ const NavBar = ({ accounts, setAccounts, handleClickScrollRoad, handleClickScrol
               </Link> 
       
               <Link onClick = {() => { handleClickScrollAbout(); }}>
-                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Sobre Nos </Box>
+                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> {t('about')} </Box>
               </Link> 
 
               <Link to = "https://elvinos.gitbook.io/whitepapper-vinocoin/" target="_blank">
@@ -334,7 +334,7 @@ const NavBar = ({ accounts, setAccounts, handleClickScrollRoad, handleClickScrol
 
               <Link onClick = {() => { handleClickScrollRoad(); }}>
                 <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Roadmap </Box>
-              </Link> 
+              </Link>               
             </Flex>
 
             {
@@ -380,7 +380,7 @@ const NavBar = ({ accounts, setAccounts, handleClickScrollRoad, handleClickScrol
                         }}
                         maxWidth={windowWidth/3}
                     >
-                    Sair
+                    {t('logout')}
                     </Button> 
                   </Box>
                   :
@@ -405,7 +405,7 @@ const NavBar = ({ accounts, setAccounts, handleClickScrollRoad, handleClickScrol
                         }}
                         maxWidth={windowWidth/3}
                     >
-                    Login com Email
+                    {t('emaillogin')}
                     </Button>
                     <MyModal connectWallet = {connectWallet} buttonPadding = {buttonPadding} fontSize = {fontSize}/>   
                   </Center>
@@ -419,23 +419,45 @@ const NavBar = ({ accounts, setAccounts, handleClickScrollRoad, handleClickScrol
             <Flex justify = "space-between" align="center" padding="28px" bg="rgba(0,0,0,0.5)" borderBottomWidth={1} height={87} >
               <Link to = "/">
                   <Image src = {logoElVinos} width={logoW} height={logoH} objectFit='fit'/>
-              </Link>
+                </Link> 
+              <Flex>
+                
+                
+                <Link onClick = {() => changeLocale('pt')}>
+                  <Box margin = "4px 15px 0 0" color={"white"} fontFamily = "Montserrat" fontSize={13}> PT </Box>
+                </Link>
+            
+                <Link onClick = {() => changeLocale('en')}>
+                  <Box margin = "4px 15px 0 0" color={"white"} fontFamily = "Montserrat" fontSize={13}> EN </Box>
+                </Link>
 
-              <IconButton
+                <IconButton
                 colorScheme='white'
                 aria-label='Open Menu'
                 onClick={() => changeMenuState()}
                 icon = {<HamburgerIcon color = {"white"} boxSize={25}/>}
               />
+              </Flex>               
+
+              
             </Flex>
           }
           </div>
           :
-          <Flex justify = "space-between" align="center" padding="28px" bg="rgba(0,0,0,0.5)" borderBottomWidth={1} height={87} >
+          <Flex justify = "space-between" align="center" padding="28px" bg="rgba(0,0,0,0.5)" borderBottomWidth={1} height={87} >            
+            <Flex justify = "space-between" align="center">
+              <Link to = "/">
+                  <Image src = {logoElVinos} width={logoW} height={logoH} objectFit='fit'/>
+              </Link>
+              
+              <Link onClick = {() => changeLocale('pt')}>
+                <Box margin = "8px 0 0 18px" color={"white"} fontFamily = "Montserrat" fontSize={13} padding={0}> PT </Box>
+              </Link>
 
-            <Link to = "/">
-                <Image src = {logoElVinos} width={logoW} height={logoH} objectFit='fit'/>
-            </Link>
+              <Link onClick = {() => changeLocale('en')}>
+                <Box margin = "8px 0 0 12px" color={"white"} fontFamily = "Montserrat" fontSize={13} padding={0}> EN </Box>
+              </Link>
+            </Flex>
 
             <Flex justify = "space-between" align="center">
               <Link to = "/">
@@ -443,7 +465,7 @@ const NavBar = ({ accounts, setAccounts, handleClickScrollRoad, handleClickScrol
               </Link> 
       
               <Link onClick = {() => { handleClickScrollAbout(); }}>
-                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize} padding={3}> Sobre Nos </Box>
+                <Box margin = "0 15px" color={"white"} fontFamily = "Montserrat" fontSize={fontSize}  padding={3}> {t('about')} </Box>                
               </Link> 
 
               <Link to = "https://elvinos.gitbook.io/whitepapper-vinocoin/" target="_blank">
@@ -509,7 +531,7 @@ const NavBar = ({ accounts, setAccounts, handleClickScrollRoad, handleClickScrol
                         }}
                         maxWidth={windowWidth/3}
                     >
-                    Sair
+                    {t('logout')}
                     </Button> 
                   </Box>
                   :
@@ -533,7 +555,7 @@ const NavBar = ({ accounts, setAccounts, handleClickScrollRoad, handleClickScrol
                         }}
                         maxWidth={windowWidth/3}
                     >
-                    Login com Email
+                    {t('emaillogin')}
                     </Button>
                     <MyModal connectWallet = {connectWallet} buttonPadding = {buttonPadding} fontSize = {fontSize}/>   
                   </Box>

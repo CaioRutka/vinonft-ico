@@ -1,0 +1,62 @@
+{
+    "about": "About",
+    "logout": "Logout",
+    "emaillogin": "Login with Email",
+
+    "success": "Success!",
+    "error": "Error!",
+    "pixErrorWarning": "You must fill in the Name, CPF and your BNB wallet address fields!",
+    "successPixMessage": "Pix code successfully copied, now just make the payment through your bank application.",
+
+    "wineUniverse": "The wine universe now inserted in the cryptoeconomy",
+    "boughtTokens": "Acquired Tokens:",
+    "generatePix": "Generate Pix",
+    "swapNotConnected": "Log in or connect your wallet with buttons below to buy Vinocoin.",
+    "buyWithPix": "Buy using Pix",
+    "buyWithCrypto": "Buy using Crypto",
+
+    "aboutUs": "About Us",
+    "aboutUs1": "El Vinos was created with the long-term objective of creating a culture of wine consumption, especially in Brazil, we believe that wine is much more than just a drink, it is a gastronomic experience that must be remarkable for all our customers.",
+    "aboutUs2": "A company that offers an integration platform via blockchain and strategies totally focused on the growth and development of the wine sector in Brazil, using the most modern technology to provide our customers with a unique and remarkable experience when consuming a bottle of wine . In addition, it provides accessibility to profitable investments in the wine segment and many other projects in the field.",
+    "aboutUs3": "El Vinos is a fully sectored ecosystem that aims to serve all aspects of the wine universe. The ecosystem offers multiple services, access to products and investments of the most varied models, always with a focus on bringing the best experience and profitability to the wine consumer.",
+    "45million": "+45 million",
+    "80million": "+80 million",
+    "drinkLikers": "Beverage Connoisseurs",
+    "blockchainUsers": "Blockchain Users",
+    "buyVinocoin": "Buy Vinocoin",
+    "readWhitepaper": "Read Whitepaper",
+
+    "meetOutEco": "Meet our Ecosystem",
+    "vinocoin": "The world's first cryptocurrency aimed at wine lovers.",
+    "vinowallet": "Vinowallet is a unique cryptocurrency storage and payment platform.",
+    "confraria": "The Confraria da El Vinos is an exclusive group with monthly events made up of wine enthusiasts and connoisseurs.",
+    "vinoflix": "Vinoflix is ​​your netflix about wine and also an exclusive community for wine lovers.",
+    "elvinosplace": "ElVinos Place is an eccomerce for Elvinos wines.",
+    "nfts": "When purchasing an NFT of a wine collection, you become a member of that collection and share exclusive benefits among members",
+
+    "acquireVinocoin": "Acquiring vinocoin means getting the world's first cryptocurrency aimed at all wine lovers.",
+    "ourObjective": "“Our goal is to become the largest and most innovative wine company in the world. Be a part of it!”",
+    "elvinosLucros": "Elvinos profits from the ecosystem and buys back tokens on the market, making them appreciate and become scarcer",
+
+    "firstRound": "In this first stage, Elvinos will be financed through the vinocoin token, seeking to raise US$ 85,000 that will be used to accelerate and build its entire ecosystem, generating more and more utility for the token and profit through its various aspects of activities such as: sale of wines through eccommerce, importation, sale of courses, benefits club, NFT's events and much more...",
+    "secondRound": "Elvinos will make part of the profits obtained throughout its operation available, where they will be used to boost the token's economy through market repurchases and burns, generating shortages and constant appreciation of the token.",
+    "thirdRound": "In addition to token repurchase, vinocoin holders will have exclusive advantages and benefits on all elvinos platforms for being holders of Vinocoin",
+
+    "preSale": "Presale",
+    "preSaleOne": "Elvinos pre-sales will take place within the Elvinos platform and will also be available at CEX brokerages and launch platforms.",
+    "preSaleTwo": "Our goal is to provide users with a clear understanding of what they are buying.",
+    "preSaleThree": "The application and the brokerage will offer several deposit options, such as PIX and bank slip.",
+    "preSaleFour": "We will also accept debit card and cryptocurrencies like BNB and USDT. After completing a phase, the next phase will begin.",
+
+    "oneMillionTokens": "1 MILLION TOKENS",
+    "nameTokenomics": "NAME:",
+    "chainTokenomics": "CHAIN:",
+    "contractTokenomics": "CONTRACT:",
+    "privateSale": "Private Sales",
+    "presalesTokenomics": "Presale",
+    "futureProjectsTokenomics": "Elvinos for future product development.",
+    "teamTokenomics": "Team",
+
+    "footter": "El Vinos: a fully sectored ecosystem that aims to serve all aspects of the wine universe.",
+    "footterCopy": "© Copyright 2023 Elvinos. All rights reserved. CNPJ: 45.386.581/0001-80"
+  }

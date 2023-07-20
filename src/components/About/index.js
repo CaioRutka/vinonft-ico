@@ -2,6 +2,7 @@ import { useState, React, useEffect } from "react";
 import { Box, Button, Flex, Image, Center } from "@chakra-ui/react";
 import { isMobile } from 'react-device-detect';
 import { ShoppingCartIcon, NewspaperIcon } from '@heroicons/react/24/solid'
+import { useTranslation } from "react-i18next";
 
 import '../../assets/fonts/Config-Regular.otf';
 import './index.css';
@@ -10,6 +11,8 @@ import Wine from "../../assets/images/Retangulo2.png";
 const About = ({ handleClickScroll }) => {
   const [isMobile, setIsBMobile] = useState(true);
   const [bigMonitor, setBigMonitor] = useState(true);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (window !== undefined){
@@ -32,38 +35,38 @@ const About = ({ handleClickScroll }) => {
             <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} w = {'100%'} h = {'100%'}>
               <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'100%'} h = {"100%"} backgroundColor={"#1F000A"} padding={50}>
                 <Box color={"white"} fontFamily = "Playfair Display" fontSize={42}>
-                  Sobre Nós
+                  {t('aboutUs')}
                 </Box>
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingTop={50}>
-                  A El Vinos foi criada com objetivo de, a longo prazo, criar uma cultura de consumo do vinho, principalmente no Brasil, acreditamos que o vinho é muito mais que apenas uma bebida ele é uma experiencia gastronomica que deve ser marcante para todos os nossos clientes . 
+                  {t('aboutUs1')}
                 </Box>
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingTop={25} paddingBottom={40}>
-                  Uma empresa que oferece plataforma de integração via blockchain e estratégias totalmente voltadas para o crescimento e desenvolvimento do setor de vinhos no Brasil, utilizando o que existe de mais moderno na tecnologia para proporcionar ao nosso cliente uma experiência única e marcante ao consumir uma garrafa de vinhos. Além disso, proporciona acessibilidade a investimentos rentáveis no segmento de vinhos e muitos outros projetos no ramo.
+                  {t('aboutUs2')}
                 </Box>
                 
                 <Box backgroundColor={"#A6013B"} w={"100%"} h={"20%"} paddingTop={25} paddingBottom={25} display={"flex"} flexDirection={"row"}> 
                   <Box backgroundColor={"#A6013B"} w={"100%"} h={"20%"} display={"flex"} flexDirection={"column"}> 
                     <Center color={"white"} backgroundColor={"#A6013B"} fontFamily = "Playfair Display" fontSize={15} align={"center"}> 
-                     +45 milhões
+                    {t('45million')}
                     </Center>    
                     <Center color={"white"} backgroundColor={"#A6013B"} fontFamily = "Playfair Display" fontSize={10} align={"center"}> 
-                     Apreciadores de Bebida
+                    {t('drinkLikers')}
                     </Center>    
                   </Box> 
                   <Box backgroundColor={"#A6013B"} w={"100%"} h={"20%"} display={"flex"} flexDirection={"column"}> 
                     <Center color={"white"} backgroundColor={"#A6013B"} fontFamily = "Playfair Display" fontSize={15} align={"center"}> 
-                    +80 milhões
+                    {t('80million')}
                     </Center>    
                     <Center color={"white"} backgroundColor={"#A6013B"} fontFamily = "Playfair Display" fontSize={10} align={"center"}> 
-                    Usúarios Blockchain
+                    {t('blockchainUsers')}
                     </Center>    
                   </Box>    
                 </Box> 
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingTop={25} paddingBottom={40}>
-                  A El Vinos é um ecossistema totalmente setorizado que visa atender todas as vertentes do universo do vinho. O ecossistema oferece múltiplos serviços, acessos a produtos e a investimentos dos mais variáveis modelos, sempre com o foco em levar a melhor experiência e lucratividade para o consumidor do vinho.
+                  {t('aboutUs3')}
                 </Box>
 
                 <Box display={"flex"} flexDirection={"column"}>
@@ -79,7 +82,7 @@ const About = ({ handleClickScroll }) => {
                        onClick = {() => { handleClickScroll(); }}
                        zIndex={1}
                     >
-                      Comprar Vinocoin
+                      {t('buyVinocoin')}
                     <ShoppingCartIcon className="ml-4 h-6 w-6 text-white-500" />
                     </Button>
                   </Box>
@@ -97,7 +100,7 @@ const About = ({ handleClickScroll }) => {
                        onClick = {() => { }}
                        zIndex={1}
                     >
-                      Ler Whitepaper
+                      {t('readWhitepaper')}
                     <NewspaperIcon className="ml-4 h-6 w-6 text-white-500" />
                     </Button>
                   </Box>
@@ -115,38 +118,38 @@ const About = ({ handleClickScroll }) => {
             <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} w = {'100%'} h = {"100%"} backgroundColor={"#000"}>
               <Box zIndex={0} justify = "center" align="start" display={"flex"} flexDirection={"column"} w = {'130%'} h = {"100%"} backgroundColor={"#1F000A"} padding={75} paddingLeft={150}>
                 <Box color={"white"} fontFamily = "Playfair Display" fontSize={35}>
-                  Sobre Nós
+                  {t('aboutUs')}
                 </Box>
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={17} paddingTop={25}>
-                  A El Vinos foi criada com objetivo de, a longo prazo, criar uma cultura de consumo do vinho, principalmente no Brasil, acreditamos que o vinho é muito mais que apenas uma bebida ele é uma experiencia gastronomica que deve ser marcante para todos os nossos clientes . 
+                  {t('aboutUs1')}
                 </Box>
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={17} paddingTop={50} paddingBottom={50}>
-                  Uma empresa que oferece plataforma de integração via blockchain e estratégias totalmente voltadas para o crescimento e desenvolvimento do setor de vinhos no Brasil, utilizando o que existe de mais moderno na tecnologia para proporcionar ao nosso cliente uma experiência única e marcante ao consumir uma garrafa de vinhos. Além disso, proporciona acessibilidade a investimentos rentáveis no segmento de vinhos e muitos outros projetos no ramo.
+                  {t('aboutUs2')}
                 </Box>
                 
                 <Box backgroundColor={"#A6013B"} w={"100%"} h={"10%"} paddingTop={60} paddingBottom={50} display={"flex"} flexDirection={"row"}> 
                   <Center backgroundColor={"#A6013B"} w={"100%"} h={"20%"} display={"flex"} flexDirection={"column"}> 
                     <Center color={"white"} backgroundColor={"#A6013B"} fontFamily = "Playfair Display" fontSize={27} align={"center"}> 
-                     +45 milhões
+                    {t('45million')}
                     </Center>    
                     <Center color={"white"} backgroundColor={"#A6013B"} fontFamily = "Playfair Display" fontSize={15} align={"center"}> 
-                     Apreciadores de Bebida
+                     {t('drinkLikers')}
                     </Center>    
                   </Center> 
                   <Center backgroundColor={"#A6013B"} w={"100%"} h={"20%"} display={"flex"} flexDirection={"column"}> 
                     <Center color={"white"} backgroundColor={"#A6013B"} fontFamily = "Playfair Display" fontSize={27} align={"center"}> 
-                    +80 milhões
+                    {t('80million')}
                     </Center>    
                     <Center color={"white"} backgroundColor={"#A6013B"} fontFamily = "Playfair Display" fontSize={15} align={"center"}> 
-                    Usúarios Blockchain
+                    {t('blockchainUsers')}
                     </Center>    
                   </Center>    
                 </Box> 
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={17} paddingTop={50} paddingBottom={50}>
-                  A El Vinos é um ecossistema totalmente setorizado que visa atender todas as vertentes do universo do vinho. O ecossistema oferece múltiplos serviços, acessos a produtos e a investimentos dos mais variáveis modelos, sempre com o foco em levar a melhor experiência e lucratividade para o consumidor do vinho.
+                  {t('aboutUs3')}
                 </Box>
 
                 <Box display={"flex"} flexDirection={"row"}>
@@ -162,7 +165,7 @@ const About = ({ handleClickScroll }) => {
                        onClick = {() => { handleClickScroll(); }}
                        zIndex={1}
                     >
-                      Comprar Vinocoin
+                      {t('buyVinocoin')}
                     <ShoppingCartIcon className="ml-4 h-6 w-6 text-white-500" />
                     </Button>
                   </Box>
@@ -180,7 +183,7 @@ const About = ({ handleClickScroll }) => {
                        onClick = {() => { window.open("https://elvinos.gitbook.io/whitepapper-vinocoin/", "_blank") }}
                        zIndex={1}
                     >
-                      Ler Whitepaper
+                      {t('readWhitepaper')}
                     <NewspaperIcon className="ml-4 h-6 w-6 text-white-500" />
                     </Button>
                   </Box>                  
@@ -196,38 +199,38 @@ const About = ({ handleClickScroll }) => {
             <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} w = {'100%'} h = {"100%"} backgroundColor={"#fff"}>
               <Box zIndex={0} justify = "center" align="start" display={"flex"} flexDirection={"column"} w = {'70%'} h = {"100%"} backgroundColor={"#1F000A"} padding={75} paddingLeft={150}>
                 <Box color={"white"} fontFamily = "Playfair Display" fontSize={35}>
-                  Sobre Nós
+                  {t('aboutUs')}
                 </Box>
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={13} paddingTop={25}>
-                  A El Vinos foi criada com objetivo de, a longo prazo, criar uma cultura de consumo do vinho, principalmente no Brasil, acreditamos que o vinho é muito mais que apenas uma bebida ele é uma experiencia gastronomica que deve ser marcante para todos os nossos clientes . 
+                  {t('aboutUs1')}
                 </Box>
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={13} paddingTop={50} paddingBottom={50}>
-                  Uma empresa que oferece plataforma de integração via blockchain e estratégias totalmente voltadas para o crescimento e desenvolvimento do setor de vinhos no Brasil, utilizando o que existe de mais moderno na tecnologia para proporcionar ao nosso cliente uma experiência única e marcante ao consumir uma garrafa de vinhos. Além disso, proporciona acessibilidade a investimentos rentáveis no segmento de vinhos e muitos outros projetos no ramo.
+                  {t('aboutUs2')}
                 </Box>
                 
                 <Box backgroundColor={"#A6013B"} w={"100%"} h={"10%"} paddingTop={60} paddingBottom={50} display={"flex"} flexDirection={"row"}> 
                   <Center backgroundColor={"#A6013B"} w={"100%"} h={"20%"} display={"flex"} flexDirection={"column"}> 
                     <Center color={"white"} backgroundColor={"#A6013B"} fontFamily = "Playfair Display" fontSize={27} align={"center"}> 
-                     +45 milhões
+                    {t('45million')}
                     </Center>    
                     <Center color={"white"} backgroundColor={"#A6013B"} fontFamily = "Playfair Display" fontSize={15} align={"center"}> 
-                     Apreciadores de Bebida
+                    {t('drinkLikers')}
                     </Center>    
                   </Center> 
                   <Center backgroundColor={"#A6013B"} w={"100%"} h={"20%"} display={"flex"} flexDirection={"column"}> 
                     <Center color={"white"} backgroundColor={"#A6013B"} fontFamily = "Playfair Display" fontSize={27} align={"center"}> 
-                    +80 milhões
+                    {t('80million')}
                     </Center>    
                     <Center color={"white"} backgroundColor={"#A6013B"} fontFamily = "Playfair Display" fontSize={15} align={"center"}> 
-                    Usúarios Blockchain
+                    {t('blockchainUsers')}
                     </Center>    
                   </Center>    
                 </Box> 
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={13} paddingTop={50} paddingBottom={50}>
-                  A El Vinos é um ecossistema totalmente setorizado que visa atender todas as vertentes do universo do vinho. O ecossistema oferece múltiplos serviços, acessos a produtos e a investimentos dos mais variáveis modelos, sempre com o foco em levar a melhor experiência e lucratividade para o consumidor do vinho.
+                  {t('aboutUs3')}
                 </Box>
 
                 <Box display={"flex"} flexDirection={"row"}>
@@ -243,7 +246,7 @@ const About = ({ handleClickScroll }) => {
                        onClick = {() => { handleClickScroll(); }}
                        zIndex={1}
                     >
-                      Comprar Vinocoin
+                      {t('buyVinocoin')}
                     <ShoppingCartIcon className="ml-4 h-6 w-6 text-white-500" />
                     </Button>
                   </Box>
@@ -261,7 +264,7 @@ const About = ({ handleClickScroll }) => {
                        onClick = {() => { window.open("https://elvinos.gitbook.io/whitepapper-vinocoin/", "_blank") }}
                        zIndex={1}
                     >
-                      Ler Whitepaper
+                      {t('readWhitepaper')}
                     <NewspaperIcon className="ml-4 h-6 w-6 text-white-500" />
                     </Button>
                   </Box>                  

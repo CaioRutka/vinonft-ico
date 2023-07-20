@@ -1,9 +1,14 @@
 import { React } from "react";
-import { Box, Button, Flex, Image } from "@chakra-ui/react";
+import { Box, Flex, Image } from "@chakra-ui/react";
 import { isMobile } from 'react-device-detect';
 
 import RoadMobile from "../../assets/images/roadmap-mobile.png";
 import RoadWeb from "../../assets/images/roadmap-web.png";
+
+import RoadMobileEN from "../../assets/images/roadmap-mobileEN.png";
+import RoadWebEN from "../../assets/images/roadmap-webEN.png";
+
+import i18n from '../../i18n';
 
 import '../../assets/fonts/Config-Regular.otf';
 import './index.css';
@@ -19,7 +24,7 @@ const Roadmap = () => {
                         <Box color={"white"} fontSize={40} fontFamily={"Playfair Display"} marginBottom={70} w = {"100%"} h = {"10%"} justify = "center" align="center" >
                             Roadmap
                         </Box>
-                        <Image src = {RoadMobile} w={"100%"} h={"auto"} objectFit='fit' zIndex={999} />
+                        <Image src = {i18n.language === "en" ? RoadMobileEN : RoadMobile} w={"100%"} h={"auto"} objectFit='fit' zIndex={999} />
                     </Box>
                 </Flex>
                 :
@@ -28,7 +33,7 @@ const Roadmap = () => {
                         <Box color={"white"} fontSize={40} fontFamily={"Playfair Display"} marginBottom={70} w = {"100%"} h = {"10%"} justify = "center" align="center" >
                             Roadmap
                         </Box>
-                        <Image src = {RoadWeb} w={"100%"} h={"auto"} objectFit='fit' zIndex={999} />
+                        <Image src = {i18n.language === "en" ? RoadWebEN : RoadWeb} w={"100%"} h={"auto"} objectFit='fit' zIndex={999} />
                     </Box>
                 </Flex>
             }

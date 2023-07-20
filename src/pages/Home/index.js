@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import {useLocation} from 'react-router-dom';
+import { useState, Suspense } from 'react';
+import i18n from '../../i18n';
 
 import NavBar from '../../components/NavBar';
 import Footer from '../../components/Footer';
@@ -13,11 +13,16 @@ import Ecosystem from '../../components/Ecosystem';
 import Tokenomics from '../../components/Tokenomics';
 import Roadmap from '../../components/Roadmap';
 import Contact from '../../components/Contact';
+import Loading from '../../components/Loading';
+import LocaleContext from '../../LocaleContext';
 
 import './index.css';
 
 function Home() {
   const [accounts, setAccounts] = useState([]);
+  const [locale, setLocale] = useState(i18n.language);
+
+  i18n.on('languageChanged', (lng) => setLocale(i18n.language));
 
   const handleClickScroll = () => {
     const element = document.getElementById('swap-section');
@@ -43,7 +48,9 @@ function Home() {
     }
   };
 
-  return (    
+  return (   
+    <LocaleContext.Provider value={{locale, setLocale}}>
+    <Suspense fallback={<Loading />}>
     <div className="overlay">
       <div className="overlay">
         <NavBar accounts = { accounts } setAccounts = {setAccounts} handleClickScrollAbout = {handleClickScrollAbout} handleClickScrollRoad = {handleClickScrollRoad}/>
@@ -70,6 +77,8 @@ function Home() {
         <div className='opac-background'></div>
       </div>
     </div>
+    </Suspense>
+    </LocaleContext.Provider> 
   );
 }
 

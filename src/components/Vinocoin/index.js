@@ -1,13 +1,18 @@
 import { useState, React, useEffect } from "react";
-import { Box, Button, Flex, Image, Center } from "@chakra-ui/react";
+import { Box, Flex, Image, Center } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 
+import i18n from '../../i18n';
 import Wine from "../../assets/images/fundo-homem-token@2x.png";
-import ThreeIcon from "../../assets/images/Untitled-1.png";
+import ThreeIcon from "../../assets/images/threeIcon.png";
+import ThreeIconEn from "../../assets/images/threeIconEN.png";
 import '../../assets/fonts/Config-Regular.otf';
 import './index.css';
 
 const Vinocoin = () => {
   const [isMobile, setIsBMobile] = useState(true);
+  
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (window !== undefined){
@@ -29,19 +34,19 @@ const Vinocoin = () => {
             </Box>
 
             <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingTop={50}>
-              Adquirir a vinocoin significa obter a primeira criptomoeda do mundo voltada a todos os amantes de vinhos.
+              {t('acquireVinocoin')}
             </Box>
 
             <Box color={"white"} fontFamily = "Playfair Display" fontSize={18} paddingTop={25} paddingBottom={25}>
-              “Nosso objetivo é nos tornar a maior e mais inovadora empresa de vinhos do mundo. Faça parte disso!”
+              {t('ourObjective')}
             </Box>
             
             <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingTop={25}>
-              Elvinos Obtém lucros com ecossistema e recompra tokens no mercado fazendo com que se valorize e se torne mais escasso
+             {t('elvinosLucros')}
             </Box>            
           </Box>   
           <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} w = {'100%'} h = {"auto"}>
-            <Image src = {ThreeIcon} objectFit='fit'  paddingBottom={50}/>
+            <Image src = {i18n.language === "en" ? ThreeIconEn : ThreeIcon} objectFit='fit'  paddingBottom={50}/>
           </Box>                    
         </Box>
         :
@@ -55,19 +60,19 @@ const Vinocoin = () => {
             </Box>
 
             <Box color={"white"} fontFamily = "Montserrat" fontSize={18} paddingTop={50}>
-              Adquirir a vinocoin significa obter a primeira criptomoeda do mundo voltada a todos os amantes de vinhos.
+              {t('acquireVinocoin')}
             </Box>
 
             <Box color={"white"} fontFamily = "Playfair Display" fontSize={20} paddingTop={25} paddingBottom={25}>
-              “Nosso objetivo é nos tornar a maior e mais inovadora empresa de vinhos do mundo. Faça parte disso!”
+              {t('ourObjective')}
             </Box>
             
             <Box color={"white"} fontFamily = "Montserrat" fontSize={18} paddingTop={25} paddingBottom={25}>
-              Elvinos Obtém lucros com ecossistema e recompra tokens no mercado fazendo com que se valorize e se torne mais escasso
+              {t('elvinosLucros')}
             </Box>
 
             <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"row"} w = {'100%'}>
-              <Image src = {ThreeIcon} objectFit='fit'/>
+              <Image src = {i18n.language === "en" ? ThreeIconEn : ThreeIcon} objectFit='fit'/>
             </Box> 
           </Box>                      
         </Box>

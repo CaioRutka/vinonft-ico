@@ -1,13 +1,15 @@
 import { useState, React, useEffect } from "react";
 import { Box, Center, Flex, Button, Stack } from "@chakra-ui/react";
 import { ShoppingCartIcon, NewspaperIcon } from '@heroicons/react/24/solid'
-import { isMobile } from 'react-device-detect';
+import { useTranslation } from "react-i18next";
 
 import '../../assets/fonts/Config-Regular.otf';
 import './index.css';
 
 const Tokenomics = ({ handleClickScroll }) => {
     const [isMobile, setIsBMobile] = useState(true);
+
+    const { t } = useTranslation();
 
     useEffect(() => {
       if (window !== undefined){
@@ -36,13 +38,13 @@ const Tokenomics = ({ handleClickScroll }) => {
                             </Box>
 
                             <Box color={"#fff"} fontSize={15} paddingLeft={25} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
-                                1 MILHÃO DE TOKENS
+                                {t('oneMillionTokens')}
                             </Box>
                         </Box>
 
                         <Box color={"white"} marginBottom={15} w = {"100%"} justify = "start" align="start" borderLeftWidth={4} borderColor={"#A6013B"}>
                             <Box color={"#A6013B"} fontSize={15} paddingLeft={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
-                                NOME:
+                            {t('nameTokenomics')}
                             </Box>
 
                             <Box color={"#fff"} fontSize={15} paddingLeft={25} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
@@ -52,7 +54,7 @@ const Tokenomics = ({ handleClickScroll }) => {
 
                         <Box color={"white"} marginBottom={20} w = {"100%"} justify = "start" align="start" borderLeftWidth={4} borderColor={"#A6013B"}>
                             <Box color={"#A6013B"} fontSize={15} paddingLeft={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
-                                REDE:
+                            {t('chainTokenomics')}
                             </Box>
 
                             <Box color={"#fff"} fontSize={15} paddingLeft={25} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
@@ -62,7 +64,7 @@ const Tokenomics = ({ handleClickScroll }) => {
 
                         <Box color={"white"} marginBottom={60} w = {"100%"} justify = "start" align="start" borderLeftWidth={4} borderColor={"#A6013B"}>
                             <Box color={"#A6013B"} fontSize={15} paddingLeft={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
-                                CONTRATO:
+                            {t('contractTokenomics')}
                             </Box>
 
                             <Box color={"#fff"} fontSize={12.5} paddingLeft={25} w = {"100%"} fontFamily={"Montserrat"} justify = "start" align="start">
@@ -83,7 +85,7 @@ const Tokenomics = ({ handleClickScroll }) => {
                                    onClick = {() => { handleClickScroll(); }}
                                    zIndex={1}
                                 >
-                                  Comprar Vinocoin
+                                  {t('buyVinocoin')}
                                 <ShoppingCartIcon className="ml-4 h-6 w-6 text-white-500" />
                                 </Button>
                               </Box>
@@ -101,7 +103,7 @@ const Tokenomics = ({ handleClickScroll }) => {
                                    onClick = {() => { window.open("https://elvinos.gitbook.io/whitepapper-vinocoin/", "_blank") }}
                                    zIndex={1}
                                 >
-                                  Ler Whitepaper
+                                {t('readWhitepaper')}
                                 <NewspaperIcon className="ml-4 h-6 w-6 text-white-500" />
                                 </Button>
                             </Box>                  
@@ -137,7 +139,7 @@ const Tokenomics = ({ handleClickScroll }) => {
                                 </Center>
 
                                 <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
-                                    Venda privada
+                                {t('privateSale')}
                                 </Center>
                             </Center>
 
@@ -147,7 +149,7 @@ const Tokenomics = ({ handleClickScroll }) => {
                                 </Center>
 
                                 <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
-                                    Pré-venda
+                                {t('presalesTokenomics')}
                                 </Center>
                             </Center>
                         </Box>
@@ -159,7 +161,7 @@ const Tokenomics = ({ handleClickScroll }) => {
                                 </Center>
 
                                 <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
-                                    Elvinos para desenvolvimento de produtos futuros.
+                                {t('futureProjectsTokenomics')}
                                 </Center>
                             </Center>
                         </Box>
@@ -171,7 +173,7 @@ const Tokenomics = ({ handleClickScroll }) => {
                                 </Center>
 
                                 <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "center" align="center">
-                                    Equipe
+                                {t('teamTokenomics')}
                                 </Center>
                             </Center>
 
@@ -224,13 +226,13 @@ const Tokenomics = ({ handleClickScroll }) => {
                             </Box>
 
                             <Box color={"#fff"} fontSize={20} paddingLeft={25} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
-                                1 MILHÃO DE TOKENS
+                            {t('oneMillionTokens')}
                             </Box>
                         </Box>
 
                         <Box color={"white"} marginBottom={20} w = {"100%"} justify = "start" align="start" borderLeftWidth={4} borderColor={"#A6013B"}>
                             <Box color={"#A6013B"} fontSize={20} paddingLeft={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
-                                NOME:
+                            {t('nameTokenomics')}
                             </Box>
 
                             <Box color={"#fff"} fontSize={20} paddingLeft={25} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
@@ -240,7 +242,7 @@ const Tokenomics = ({ handleClickScroll }) => {
 
                         <Box color={"white"} marginBottom={20} w = {"100%"} justify = "start" align="start" borderLeftWidth={4} borderColor={"#A6013B"}>
                             <Box color={"#A6013B"} fontSize={20} paddingLeft={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
-                                REDE:
+                            {t('chainTokenomics')}
                             </Box>
 
                             <Box color={"#fff"} fontSize={20} paddingLeft={25} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
@@ -250,7 +252,7 @@ const Tokenomics = ({ handleClickScroll }) => {
 
                         <Box color={"white"} marginBottom={60} w = {"100%"} justify = "start" align="start" borderLeftWidth={4} borderColor={"#A6013B"}>
                             <Box color={"#A6013B"} fontSize={20} paddingLeft={25} fontFamily={"Playfair Display"} w = {"100%"} justify = "start" align="start" >
-                                CONTRATO:
+                            {t('contractTokenomics')}
                             </Box>
 
                             <Box color={"#fff"} fontSize={18} paddingLeft={25} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
@@ -271,7 +273,7 @@ const Tokenomics = ({ handleClickScroll }) => {
                                    onClick = {() => { handleClickScroll(); }}
                                    zIndex={1}
                                 >
-                                  Comprar Vinocoin
+                                    {t('buyVinocoin')}
                                 <ShoppingCartIcon className="ml-4 h-6 w-6 text-white-500" />
                                 </Button>
                               </Box>
@@ -289,7 +291,7 @@ const Tokenomics = ({ handleClickScroll }) => {
                                    onClick = {() => { window.open("https://elvinos.gitbook.io/whitepapper-vinocoin/", "_blank") }}
                                    zIndex={1}
                                 >
-                                  Ler Whitepaper
+                                 {t('readWhitepaper')}
                                 <NewspaperIcon className="ml-4 h-6 w-6 text-white-500" />
                                 </Button>
                             </Box>                  
@@ -325,7 +327,7 @@ const Tokenomics = ({ handleClickScroll }) => {
                                 </Center>
 
                                 <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
-                                    Venda privada
+                                {t('privateSale')}
                                 </Center>
                             </Center>
 
@@ -335,7 +337,7 @@ const Tokenomics = ({ handleClickScroll }) => {
                                 </Center>
 
                                 <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
-                                    Pré-venda
+                                {t('presalesTokenomics')}
                                 </Center>
                             </Center>
                         </Box>
@@ -347,7 +349,7 @@ const Tokenomics = ({ handleClickScroll }) => {
                                 </Center>
 
                                 <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"80%"} justify = "start" align="start" textAlign={"center"}>
-                                    Elvinos para desenvolvimento de produtos futuros. 
+                                {t('futureProjectsTokenomics')}
                                 </Center>
                             </Center>
                         </Box>
@@ -359,7 +361,7 @@ const Tokenomics = ({ handleClickScroll }) => {
                                 </Center>
 
                                 <Center color={"white"} fontSize={14} fontFamily={"Montserrat"} w = {"100%"} justify = "start" align="start">
-                                    Equipe
+                                {t('teamTokenomics')}
                                 </Center>
                             </Center>
 

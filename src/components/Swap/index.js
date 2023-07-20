@@ -8,11 +8,12 @@ import withReactContent from 'sweetalert2-react-content';
 import copy from "copy-to-clipboard";
 import { CurrencyDollarIcon } from '@heroicons/react/24/solid'
 import { useNavigate } from 'react-router-dom';
-import MyModal from "../Modal";
+import { useTranslation } from "react-i18next";
 
 import '../../assets/fonts/Config-Regular.otf';
 import './index.css';
 
+import MyModal from "../Modal";
 import Wines from "../../assets/images/vinhos-moeda@2x.png";
 import VinocoinIcon from "../../assets/images/Moeda.png";
 import BNBIcon from "../../assets/images/bnb.png";
@@ -117,12 +118,12 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
 
     const [userInvestedAmount, setUserInvestedAmount] = useState(0);
 
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     const copyToClipboard = (pixCopy) => {
       copy(pixCopy);
-      alertContent("Sucesso!", "Pix copia e cola copiado com sucesso, \
-      agora é só realizar o pagamento atraves do aplicativo do seu banco.", "success", 4000);
+      alertContent(t('success'), t('successPixMessage'), "success", 4000);
    }
 
     const gerarCobrançaPix = async () => {
@@ -156,7 +157,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
         }
       } 
       else {
-          alertContent("Error!", "Você deve preencher os campos de Nome, CPF e seu endereço de carteira BNB!", "warning", 4000);
+          alertContent(t('error'), t("pixErrorWarning"), "warning", 4000);
       }
   };
   
@@ -374,7 +375,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
             <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'85%'} h={1050}>
               <Box justify = "center" align="center">
                 <Box color={"white"} fontFamily = "Playfair Display" fontSize={40} w={"100%"} align={"center"} marginTop={20}> 
-                  O universo do vinho agora inserido na criptoeconomia 
+                  {t('wineUniverse')}
                 </Box>     
                 <Center display={"flex"} flexDirection={"column"} alignContent={"center"} justifyContent={"center"}>
                 <Button
@@ -397,7 +398,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                      }}
                      zIndex={1}
                 >
-                  {buyWithPix ? "Comprar com Crypto" : "Comprar no Pix"}
+                  {buyWithPix ? t('buyWithCrypto') : t('buyWithPix')}
                   <CurrencyDollarIcon className="ml-4 h-6 w-6 text-white-500" />
                 </Button>
                 </Center>
@@ -424,7 +425,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                   </Box>
 
                   <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={25}> 
-                    Tokens Adiquiridos: {userInvestedAmount}
+                    {t('boughtTokens')} {userInvestedAmount}
                   </Box>
                   
                   <Box display={"flex"} flexDirection={"row"} align={"start"} w = {250}> 
@@ -535,7 +536,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                        }
                        zIndex={1}
                   >
-                    Gerar Pix
+                    {t('generatePix')}
                   </Button>
                 </Center>
                 :
@@ -553,7 +554,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                   </Box>
 
                   <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={25}> 
-                    Tokens Adiquiridos: {userInvestedAmount}
+                    {t('boughtTokens')} {userInvestedAmount}
                   </Box>
                   
                   <Box display={"flex"} flexDirection={"row"} align={"start"} w = {250}> 
@@ -633,7 +634,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                         }}
                        zIndex={1}
                   >
-                    Realizar Swap
+                    Swap
                   </Button>
                 </Center>
                 }
@@ -642,7 +643,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                   <div>
                     <Flex justify = "space-evenly" align="space-evenly" w = {300} h = {500} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"}>
                   <Box color={"#A6013B"} fontFamily = "Montserrat" fontSize={25} w={"100%"} align={"center"} paddingBottom={5} paddingLeft={20} paddingRight={20}> 
-                    Realize o login ou conecte sua carteira com botões abaixo para comprar Vinocoin.
+                    {t('swapNotConnected')}
                   </Box> 
 
                   <Box align={"center"} paddingBottom={10}> 
@@ -660,7 +661,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                           }}
                          zIndex={1}
                     >
-                      Login com Email
+                      {t('emaillogin')}
                     </Button>
 
                     <MyModal connectWallet = {connectWallet} buttonPadding = {"15px 40px 15px 40px"} fontSize = {17}/> 
@@ -678,11 +679,11 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                 bigMonitor
                 ?
                 <Box color={"white"} fontFamily = "Playfair Display" fontSize={60} w={"560px"} marginBottom={100}> 
-                  O universo do vinho agora inserido na criptoeconomia 
+                  {t('wineUniverse')}
                 </Box> 
                 :
                 <Box color={"white"} fontFamily = "Playfair Display" fontSize={40} w={"460px"} marginBottom={100}> 
-                  O universo do vinho agora inserido na criptoeconomia 
+                  {t('wineUniverse')}
                 </Box> 
               }    
                 <Flex display={"flex"} flexDirection={"column"} alignContent={"center"} justifyContent={"center"}>
@@ -704,7 +705,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                      }}
                      zIndex={1}
                 >
-                  {buyWithPix ? "Comprar com Crypto" : "Comprar no Pix"}
+                  {buyWithPix ? t('buyWithCrypto') : t('buyWithPix')}
                   <CurrencyDollarIcon className="ml-4 h-6 w-6 text-white-500" />
                 </Button>
                 </Flex>
@@ -743,7 +744,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                   </Box>
 
                   <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={25}> 
-                    Tokens Adiquiridos: {userInvestedAmount}
+                    {t('boughtTokens')} {userInvestedAmount}
                   </Box>
                   
                   <Box display={"flex"} flexDirection={"row"} align={"start"} w = {250}> 
@@ -854,7 +855,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                        }
                        zIndex={1}
                   >
-                    Gerar Pix
+                    {t('generatePix')}
                   </Button>
                 </Center>
                 :
@@ -872,7 +873,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                   </Box>
 
                   <Box color={"black"} fontFamily = "Montserrat" fontSize={16} w={"100%"} align={"center"} paddingBottom={25}> 
-                    Tokens Adiquiridos: {userInvestedAmount}
+                    {t('boughtTokens')} {userInvestedAmount}
                   </Box>
                   
                   <Box display={"flex"} flexDirection={"row"} align={"start"} w = {250}> 
@@ -952,7 +953,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                         }}
                        zIndex={1}
                   >
-                    Realizar Swap
+                    Swap
                   </Button>
                 </Center>
                 }
@@ -961,7 +962,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                   <div>
                     <Flex justify = "space-evenly" align="space-evenly" w = {400} h = {500} display={"flex"} flexDirection={"column"} borderRadius = {"5%"} borderWidth={10} borderColor={"#fff"} bg = {"white"} marginLeft={50}>
                   <Box color={"#A6013B"} fontFamily = "Montserrat" fontSize={25} w={"100%"} align={"center"} paddingBottom={5} paddingLeft={20} paddingRight={20}> 
-                    Realize o login ou conecte sua carteira com botões abaixo para comprar Vinocoin.
+                    {t('swapNotConnected')}
                   </Box> 
 
                   <Box align={"center"} paddingBottom={10}> 
@@ -979,7 +980,7 @@ const Swap = ({ accounts, setAccounts, handleClickScroll }) => {
                           }}
                          zIndex={1}
                     >
-                      Login com Email
+                      {t('emaillogin')}
                     </Button>
 
                     <MyModal connectWallet = {connectWallet} buttonPadding = {"12px 40px 12px 40px"} fontSize = {17}/> 

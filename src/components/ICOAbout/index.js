@@ -1,16 +1,18 @@
 import { useState, React, useEffect } from "react";
 import { Box, Center, Flex, Image, Button } from "@chakra-ui/react";
-import { isMobile } from 'react-device-detect';
+import { useTranslation } from "react-i18next";
 import { ShoppingCartIcon } from '@heroicons/react/24/solid'
 
-
-import Back from "../../assets/images/bg-elvinos-2.png";
-import tokens from "../../assets/images/e219c56b83b60ccfdc25ffeda216524a@2x.png";
+import i18n from '../../i18n';
+import tokens from "../../assets/images/tokens.png";
+import tokensEN from "../../assets/images/tokensEN.png";
 import '../../assets/fonts/Config-Regular.otf';
 import './index.css';
 
 const ICOBox = ({handleClickScroll}) => {
   const [isMobile, setIsMobile] = useState(true);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (window !== undefined){
@@ -30,27 +32,27 @@ const ICOBox = ({handleClickScroll}) => {
 
               <Box zIndex={0} justify = "center" align="center" display={"flex"} flexDirection={"column"} w = {'100%'} h = {"100%"}>
                 <Box color={"white"} fontFamily = "Playfair Display" fontSize={42} padding={50} paddingTop={0} paddingBottom={20} justify = "center" align="center">
-                  Pré venda
+                {t('preSale')}
                 </Box>
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingBottom={10}>
-                A pré-venda da Elvinos ocorrerá dentro da plataforma da Elvinos e também disponibilizados em corretoras CEX e plataformas de lançamento. 
+                {t('preSaleOne')}
                 </Box>
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingBottom={10}>
-                Nosso objetivo é fornecer aos usuários uma compreensão clara do que eles estão comprando. 
+                {t('preSaleTwo')}
                 </Box>
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingBottom={10}>
-                O aplicativo e a corretora oferecerão diversas opções de depósito, como PIX e boleto. 
+                {t('preSaleThree')}
                 </Box>
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={15}  paddingBottom={50}>
-                Também aceitaremos cartão de débito e criptomoedas como BNB e USDT. Após o encerramento de uma fase, a fase seguinte terá início.
+                {t('preSaleFour')}
                 </Box>
 
                 <Center zIndex={0} justify = "center" align="center" w = {'100%'} paddingBottom={50}>
-                  <Image src = {tokens} objectFit='fit'/>
+                  <Image src = {i18n.language === "en" ? tokensEN : tokens} objectFit='fit'/>
                 </Center> 
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={15}>
@@ -65,7 +67,7 @@ const ICOBox = ({handleClickScroll}) => {
                        onClick = {() => { handleClickScroll(); }}
                        zIndex={1}
                     >
-                      Comprar Vinocoin
+                      {t('buyVinocoin')}
                     <ShoppingCartIcon className="ml-4 h-6 w-6 text-white-500" />
                     </Button>
                   </Box>
@@ -80,23 +82,23 @@ const ICOBox = ({handleClickScroll}) => {
 
               <Box zIndex={0} justify = "center" align="start" display={"flex"} flexDirection={"column"} w = {'50%'} h = {"100%"}>
                 <Box color={"white"} fontFamily = "Playfair Display" fontSize={42} padding={100} paddingBottom={20}>
-                  Pré-venda
+                {t('preSale')}
                 </Box>
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingLeft={100} paddingRight={50} paddingBottom={10}>
-                A pré-venda da Elvinos ocorrerá dentro da plataforma da Elvinos e também disponibilizados em corretoras CEX e plataformas de lançamento. 
+                {t('preSaleOne')}
                 </Box>
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingLeft={100} paddingRight={50} paddingBottom={10}>
-                Nosso objetivo é fornecer aos usuários uma compreensão clara do que eles estão comprando. 
+                {t('preSaleTwo')}
                 </Box>
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingLeft={100} paddingRight={50} paddingBottom={10}>
-                O aplicativo e a corretora oferecerão diversas opções de depósito, como PIX e boleto. 
+                {t('preSaleThree')}
                 </Box>
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingLeft={100} paddingRight={50} paddingBottom={50}>
-                Também aceitaremos cartão de débito e criptomoedas como BNB e USDT. Após o encerramento de uma fase, a fase seguinte terá início.
+                {t('preSaleFour')}
                 </Box>
 
                 <Box color={"white"} fontFamily = "Montserrat" fontSize={15} paddingLeft={100} paddingRight={50}>
@@ -111,7 +113,7 @@ const ICOBox = ({handleClickScroll}) => {
                        onClick = {() => { handleClickScroll(); }}
                        zIndex={1}
                     >
-                      Comprar Vinocoin
+                      {t('buyVinocoin')}
                     <ShoppingCartIcon className="ml-4 h-6 w-6 text-white-500" />
                     </Button>
                   </Box>
@@ -119,7 +121,7 @@ const ICOBox = ({handleClickScroll}) => {
               </Box>
 
               <Center zIndex={0} justify = "center" align="center" w = {'40%'}>
-                <Image src = {tokens} objectFit='fit'/>
+                <Image src = {i18n.language === "en" ? tokensEN : tokens} objectFit='fit'/>
               </Center> 
             
             </Box>            
